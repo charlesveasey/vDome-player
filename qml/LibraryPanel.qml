@@ -263,7 +263,7 @@ Item {
                            "title": filename,
                            "author": "",
                            "duration": dur,
-                           "file":  filepath,
+                           "file":  plist.convertPath(filepath),
                            "mime": mtype,
                            "held": false
                 });

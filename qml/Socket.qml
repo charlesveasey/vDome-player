@@ -40,18 +40,18 @@ Item {
             }
             else if (address == "/input/duration") {
                 var file = msg.split(",")[0];
-                file = Qt.resolvedUrl(file)
-                file = plist.convertPath(file);
-                var dur =  parseFloat(msg.split(",")[1]);
+                var dur = parseFloat(msg.split(",")[1]);
                 controlPanel.cDuration = parseFloat(dur);
                 controlPanel.time = secondsToHms(controlPanel.duration);
-                db.updateLibraryItemDuration(msg.split(",")[0], dur)
+                db.updateLibraryItemDuration(file, dur)
                 libraryPanel.loadSort();
                 var c;
                 for (var i=0; i<playlistPanel.getCount(); i++){
                     c = playlistPanel.getFileByIndex(i);
-                    if (c == msg.split(",")[0])
+                    if (c == file){
                         playlistPanel.setProperty(i, "duration", dur);
+                        playlistPanel.sumPlaylistDuration();
+                    }
                 }
             }
             else if (address == "/input/" && msg == "end")  {
