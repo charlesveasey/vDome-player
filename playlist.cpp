@@ -101,5 +101,9 @@ QString Playlist::convertPath(QString filename){
     QString filepath;
     QUrl url(filename);
     filepath = url.toLocalFile();
+
+    QDir file;
+    filepath = file.toNativeSeparators(filepath);
+
     return filepath;
 }
