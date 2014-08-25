@@ -181,6 +181,13 @@ Item {
         minimum: 0.0; maximum: 1.0
         hit.height: height+8; hit.y: -12
 
+        onPressedChanged: {
+            if (pressed)
+                socket.sendPause();
+            else if (pauseBtn.visible)
+                socket.sendPlay();
+        }
+
         onValueChangedByHandle: {
             seek();
         }
@@ -562,7 +569,7 @@ Item {
      SEEK UPDATE FOR IMAGE TIMER
      **************************************************************/
     function seek() {
-        timerCnt = 100*cDuration*positionValue
+        timerCnt = 100*cDuration*positionValue;
         socket.sendSeek(positionValue);
     }
 
