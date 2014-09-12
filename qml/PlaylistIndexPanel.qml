@@ -226,7 +226,9 @@ Item {
         id: saveWarningDialog
         title: "Save Playlist"
         text: "A playlist with this title already exists.\nDo you want to overwrite it?"
-        standardButtons: StandardButton.Yes | StandardButton.No
+        onVisibleChanged: {
+            standardButtons = StandardButton.Yes | StandardButton.No
+        }
         onYes: {
             overwritePlaylistIndex();
         }

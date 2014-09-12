@@ -183,7 +183,12 @@ Item {
     MessageDialog {
         id: removeWarningDialog
         title: "Remove Item From Library"
-        standardButtons: StandardButton.Yes | StandardButton.No
+        //standardButtons: StandardButton.Yes | StandardButton.No
+
+        onVisibleChanged: {
+            standardButtons = StandardButton.Yes | StandardButton.No
+        }
+
         onYes: {
             removeCurrentLibraryItem();
             /*
@@ -201,7 +206,9 @@ Item {
     MessageDialog {
         id: deleteFileDialog
         title: "Delete File From Hard Drive"
-        standardButtons: StandardButton.Yes | StandardButton.No
+        onVisibleChanged: {
+            standardButtons = StandardButton.Yes | StandardButton.No
+        }
         onYes: {
             syscmds.deleteFile(getCurrentFile());
             removeCurrentLibraryItem();

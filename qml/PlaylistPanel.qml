@@ -201,7 +201,9 @@ Item {
         id: clearWarningDialog
         title: "Clear Playlist"
         text: "Do you want to clear the playlist?"
-        standardButtons: StandardButton.Yes | StandardButton.No
+        onVisibleChanged: {
+            standardButtons = StandardButton.Yes | StandardButton.No
+        }
         onYes: {
             playlist.clear();
             cSum = 0;
@@ -215,7 +217,9 @@ Item {
     MessageDialog {
         id: removeWarningDialog
         title: "Remove Item From Playlist"
-        standardButtons: StandardButton.Yes | StandardButton.No
+        onVisibleChanged: {
+            standardButtons = StandardButton.Yes | StandardButton.No
+        }
         onYes: {
             removeCurrentItem();
             sumPlaylistDuration();
