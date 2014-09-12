@@ -10,9 +10,9 @@ Window {
     id: root
 
     title: "Settings"
-    width: 350; height: 300
-    minimumWidth: 350; minimumHeight: 300;
-    maximumWidth: 350; maximumHeight: 300;
+    width: 350; height: 265
+    minimumWidth: 350; minimumHeight: 265;
+    maximumWidth: 350; maximumHeight: 265;
     color: '#111'
     opacity: 1
 
