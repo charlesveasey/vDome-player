@@ -14,6 +14,8 @@ Window {
     color: '#111'
     opacity: 1
 
+    flags: Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowSystemMenuHint
+
     property var settingsObject;
 
     Component.onCompleted: {
@@ -23,6 +25,9 @@ Window {
              syscmds.executeFile(settingsStartup.filepath);
     }
 
+    Component.onDestruction: {
+        cancel();
+    }
 
     Row{
         x: 20;
@@ -101,7 +106,6 @@ Window {
             x: 20;
             y: 20;
             z: 5;
-
         }
 
         SettingsStartup{
