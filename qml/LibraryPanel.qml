@@ -185,9 +185,12 @@ Item {
         title: "Remove Item From Library"
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
+            removeCurrentLibraryItem();
+            /*
             deleteFileDialog.text = "Do you want to delete '"+ getCurrentFile() +
                "' from the hard drive?\nWARNING: The file cannot be recovered!"
             deleteFileDialog.open();
+            */
         }
         Component.onCompleted: visible = false;
     }
