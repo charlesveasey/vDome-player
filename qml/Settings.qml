@@ -11,6 +11,8 @@ Window {
 
     title: "Settings"
     width: 350; height: 300
+    minimumWidth: 350; minimumHeight: 300;
+    maximumWidth: 350; maximumHeight: 300;
     color: '#111'
     opacity: 1
 
