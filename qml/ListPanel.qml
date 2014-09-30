@@ -104,7 +104,7 @@ Item {
                  border.width: 0
                  border.color: "#FFF"
                  radius: 5
-                 opacity: 0.075
+                 opacity: .125
                  y: 2;
              }
          }
@@ -193,7 +193,7 @@ Item {
                             border.width: 0
                             border.color: "#FFF"
                             radius: 5
-                            opacity: 0.075
+                            opacity: 0.125
                             y: 2;
                         }
                     }
