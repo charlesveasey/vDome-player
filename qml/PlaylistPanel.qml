@@ -92,7 +92,7 @@ Item {
      **************************************************************/
     Text{
         id:playlistDuration
-        x: playlist.durationHeaderX+playlist.x+10; y: 150;
+        x: playlist.durationHeaderX+playlist.x+2; y: 150;
         color: "#ffffff";
         text: secondsToHms(cSum);
         font.pixelSize: 15

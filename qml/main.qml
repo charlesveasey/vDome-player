@@ -144,6 +144,7 @@ ApplicationWindow {
         }
         onMousePressed: {
             playlistPanel.setCurrentIndex(-1);
+            controlPanel.forceActiveFocus();
         }
     }
 

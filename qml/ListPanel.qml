@@ -525,13 +525,18 @@ Item {
                         if (mouseX < list.width){
 
                             if (inc >=0 && inc <= list.height) {
-                                if ((mouseItem.y / 24) - parseInt(mouseItem.y / 24) < .5)
-                                    reorderIndicator.y = mouseHoverItem.y;
-                                else
-                                    reorderIndicator.y = mouseHoverItem.y+24;
-
-                                activeIndex = list.indexAt(0, reorderIndicator.y);
-                                reorderIndicator.y = reorderIndicator.y - list.contentY;
+                                if ((mouseItem.y / 24) - parseInt(mouseItem.y / 24) < .5) {
+                                    if (reorderIndicator != null)
+                                        reorderIndicator.y = mouseHoverItem.y;
+                                }
+                                else{
+                                    if (reorderIndicator != null)
+                                        reorderIndicator.y = mouseHoverItem.y+24;
+                                }
+                                if (reorderIndicator != null){
+                                    activeIndex = list.indexAt(0, reorderIndicator.y);
+                                    reorderIndicator.y = reorderIndicator.y - list.contentY;
+                                }
                             }
 
                             if (mouseY+list.contentY >= list.contentHeight){
