@@ -159,7 +159,7 @@ Item {
      **************************************************************/
     Item {
         id: addRemoveBtns;
-        x: 4
+        x: -3
         y: parent.height + 58
         visible: active && window.height > 275
 
