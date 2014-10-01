@@ -184,8 +184,8 @@ Item {
         onPressedChanged: {
             if (pressed)
                 socket.sendPause();
-            //else if (pauseBtn.visible)
-            //    socket.sendPlay();
+            else if (pauseBtn.visible)
+                socket.sendPlay();
         }
 
         onValueChangedByHandle: {
