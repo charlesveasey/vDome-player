@@ -47,7 +47,7 @@ Item {
                 drag.axis: Drag.XAxis
                 drag.minimumX: 0
                 drag.maximumX: slider.xMax
-                onPressedChanged: {
+                onPressed: {
                     value = Math.max(minimum, Math.min(maximum, (maximum - minimum) * (mouseX - handle.width/2) / slider.xMax + minimum));
                     valueChangedByHandle(value);
                     updatePos();
