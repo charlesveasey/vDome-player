@@ -555,6 +555,7 @@ Item {
             else{
                 playlistPanel.setCurrentIndex(0);
                 fileQueued = true;
+                title = currentPanel.getControlPanelTitle();
             }
         }
         else if (playbackValue == "loop list"){

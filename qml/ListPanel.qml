@@ -496,7 +496,8 @@ Item {
 
 
                 if(!groupSelectionEnabled){
-                    dataModel.get(list.currentIndex).held = false;
+                    if (dataModel.get(list.currentIndex))
+                      dataModel.get(list.currentIndex).held = false;
                 }
                 else if(groupSelectionEnabled && !groupSelectionActive && !groupShiftActive){
                     c=0;
