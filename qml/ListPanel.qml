@@ -708,7 +708,15 @@ Item {
         }
     }
 
-
-
-
+    /**************************************************************
+     SET CURRENT INDEX
+     **************************************************************/
+    function setCurrentIndex(i) {
+        list.currentIndex = i;
+        if (groupSelectionEnabled){
+            clearHeld();
+            if (dataModel.get(i))
+               dataModel.get(i).held = true;
+        }
+    }
 }

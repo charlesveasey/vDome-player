@@ -119,6 +119,7 @@ ApplicationWindow {
         onMousePressed: {
             libraryPanel.setCurrentIndex(-1);
             libraryPanel.clearHeld();
+            playlistIndexPanel.setCurrentIndex(-1);
         }
     }
 

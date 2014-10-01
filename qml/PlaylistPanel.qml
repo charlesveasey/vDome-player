@@ -467,7 +467,7 @@ Item {
      SET CURRENT INDEX
      **************************************************************/
     function setCurrentIndex(value){
-        playlist.list.currentIndex = value;
+        playlist.setCurrentIndex(value);
     }
 
     /**************************************************************

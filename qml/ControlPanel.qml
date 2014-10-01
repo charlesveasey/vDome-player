@@ -16,7 +16,7 @@ Item {
     property string cType;
     property int cIndex:-1;
     property bool isPlaying: false;
-    property string cFile;
+    property bool fileQueued;
 
     signal sourcePressed
     signal selectionPopup
@@ -434,17 +434,23 @@ Item {
      PLAY FILE
      **************************************************************/
     function playFile() {
+        fileQueued = false;
+
+        if (currentPanel == playlistIndexPanel){
+            currentPanel = playlistPanel;
+            playlistPanel.setCurrentIndex(0);
+        }
+
         cDuration = currentPanel.getCurrentDuration();
         cType = currentPanel.getCurrentMime();
         cType = cType.substring(0,5);
         cIndex = currentPanel.getCurrentIndex();
-        if (currentPanel != playlistIndexPanel){
-            title = currentPanel.getControlPanelTitle();
-            stopTimer();
-            resetTimer();
-            startTimer();
-            socket.sendFile(currentPanel.getCurrentFile());
-        }
+
+        title = currentPanel.getControlPanelTitle();
+        stopTimer();
+        resetTimer();
+        startTimer();
+        socket.sendFile(currentPanel.getCurrentFile());
     }
 
     /**************************************************************
@@ -452,7 +458,12 @@ Item {
      **************************************************************/
     function play() {
         startTimer();
-        socket.sendPlay();
+        if (fileQueued){
+            playFile()
+            socket.sendFile(currentPanel.getCurrentFile());
+        }
+        else
+            socket.sendPlay();
     }
 
     /**************************************************************
@@ -490,6 +501,10 @@ Item {
 
         if (isPlaying)
            playFile();
+        else
+            fileQueued = true;
+
+        title = currentPanel.getControlPanelTitle();
     }
 
     /**************************************************************
@@ -519,6 +534,11 @@ Item {
 
         if (isPlaying)
            playFile();
+        else
+            fileQueued = true;
+
+        title = currentPanel.getControlPanelTitle();
+
     }
 
     /**************************************************************
@@ -532,8 +552,10 @@ Item {
                 currentPanel.nextIndex();
                 playFile();
             }
-            else
-                isPlaying = false;
+            else{
+                playlistPanel.setCurrentIndex(0);
+                fileQueued = true;
+            }
         }
         else if (playbackValue == "loop list"){
             if (currentPanel.hasNext())
@@ -546,6 +568,7 @@ Item {
             nextRandom();
             playFile();
         }
+
     }
 
     /**************************************************************
@@ -557,7 +580,6 @@ Item {
         if (currentPanel.getCount() > 1){
             do{
                 newIndex = Math.floor((Math.random() * currentPanel.getCount()) + 0);
-                console.log(newIndex, cIndex);
             }while(newIndex == cIndex)
             cIndex = newIndex;
         }
@@ -590,9 +612,8 @@ Item {
             }
         }
         else if(currentPanel == playlistPanel){
-            if (playbackValue != "loop file") {
+            if (playbackValue != "loop file")
                 next();
-            }
         }
     }
 

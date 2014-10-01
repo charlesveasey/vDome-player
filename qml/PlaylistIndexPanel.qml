@@ -65,7 +65,6 @@ Item {
         onMouseDoubleClicked: {
             root.mouseDoubleClicked();
             controlPanel.currentPanel = playlistIndexPanel;
-            controlPanel.title = getControlPanelTitle();
             playlistPanel.list.model.clear();
             playlistPanel.title = getCurrentTitle();
             playlistPanel.loadPlaylist(getCurrentId());
