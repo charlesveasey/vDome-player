@@ -68,10 +68,21 @@ BorderImage {
             if (visible) root.selectionPopup();
         }
 
-        onCurrentIndexChanged : {
-            selectedItem = sources.get(currentIndex).name
-            root.clicked()
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onMouseYChanged: {
+                list.currentIndex = list.indexAt(mouseX,mouseY);
+            }
+            onClicked: {
+                selectedItem = sources.get(list.currentIndex).name;
+                root.clicked();
+            }
         }
+
+
 
         delegate: Item {
             height: 24
