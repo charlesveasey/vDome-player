@@ -264,7 +264,7 @@ Item {
             id: inputItems; x: 104.5; y: 33;
             visible: false
             width: 100
-            height: 175
+            height: 164
             itemHeight: 40
 
             Component.onCompleted: {
@@ -345,7 +345,7 @@ Item {
             id: playbackItems; x: 186.5; y: 33.25;
             visible: false
             width: 100
-            height: 125
+            height: 118
             itemHeight: 40
 
             Component.onCompleted: {

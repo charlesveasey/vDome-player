@@ -3,14 +3,9 @@ import QtQuick 2.0
 /**************************************************************
  SELECTION PANEL
  **************************************************************/
-BorderImage {
+Item {
     id: root
-    source: "../images/selection-bg.png"
-    border.top: 12
-    border.bottom: 12
-    border.left: 12
-    border.right: 12
-    height: 78
+
     property int itemHeight: 25
     property string selectedItem: ""
     property bool isMouseAbove: mouseAboveMonitor.containsMouse
@@ -51,6 +46,14 @@ BorderImage {
     }
 
 
+    Rectangle {
+        color: 'white';
+        opacity: .1;
+        width: parent.width
+        height: parent.height
+        radius: 10
+    }
+
     /**************************************************************
      POPUP
      **************************************************************/
@@ -85,13 +88,13 @@ BorderImage {
 
 
         delegate: Item {
-            height: 24
+            height: 23
             width: parent.width
             Rectangle {
                 anchors.fill: parent
                 //border.color: index == list.currentIndex ? "#44ffffff" : "transparent"
                 color: index == list.currentIndex ? "#22ffffff" : "transparent"
-                radius: 3
+                radius: 6
                 Text {
                     color: "#ffffff"
                     font.pixelSize: 13
