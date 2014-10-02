@@ -264,14 +264,21 @@ Item {
             id: inputItems; x: 104.5; y: 33;
             visible: false
             width: 100
-            height: 125
+            height: 175
             itemHeight: 40
 
             Component.onCompleted: {
                 model.append({ name: 'media'   });
                 model.append({ name: 'capture' });
-                model.append({ name: 'syphon'  });
+
+                if (syscmds.getOSName() == 'osx')
+                    model.append({ name: 'syphon'  });
+                else if (syscmds.getOSName() == 'win')
+                    model.append({ name: 'spout'  });
+
                 model.append({ name: 'grid'    });
+                model.append({ name: 'black'    });
+                model.append({ name: 'white'    });
             }
 
             onSelectionPopup: {

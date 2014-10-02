@@ -11,6 +11,7 @@ public:
     Syscmds(QQuickItem *parent = 0);
     Q_INVOKABLE void deleteFile(QString filename);
     Q_INVOKABLE void executeFile(QString filename);
+    Q_INVOKABLE QString getOSName();
 
 private:
     void processError(QProcess::ProcessError err);
