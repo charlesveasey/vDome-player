@@ -20,7 +20,7 @@ ApplicationWindow {
     height: 700
     minimumWidth: minW;
     minimumHeight: minH;
-    title: "vDome Player"
+    title: "vDome"
     //flags: Qt.WindowActive
     //flags: Qt.FramelessWindowHint
 
