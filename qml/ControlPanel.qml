@@ -161,7 +161,7 @@ Item {
     /**************************************************************
      TITLE
      **************************************************************/
-    Text { id: titleText; x: 192; y: 25;
+    Text { id: titleText; x: 193; y: 25;
         color: "#ffffff"
         text: qsTr("")
         font.pixelSize: 18
@@ -199,6 +199,7 @@ Item {
         font.pixelSize: 12
         font.family: openSansItalic.name
         font.italic: true;
+        visible: pSlider.enabled
     }
 
     /**************************************************************
@@ -302,6 +303,9 @@ Item {
                     previousBtn.enabled = true;
                     nextBtn.enabled = true;
                     playbackItem.enabled = true;
+                    title = "";
+                    if (currentPanel && currentPanel.getControlPanelTitle())
+                        title = currentPanel.getControlPanelTitle();
                 }
                 else{
                     pSlider.enabled = false;
@@ -311,6 +315,7 @@ Item {
                     previousBtn.enabled = false;
                     nextBtn.enabled = false;
                     playbackItem.enabled = false;
+                    title = selectedItem.toUpperCase();
                 }
 
                 if (selectedItem == "grid" || selectedItem == "black" || selectedItem == "white"){

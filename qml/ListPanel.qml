@@ -641,7 +641,10 @@ Item {
      GET CURRENT TITLE
      **************************************************************/
     function getCurrentTitle() {
-        return dataModel.get(list.currentIndex).title;
+        if (dataModel.get(list.currentIndex))
+            return dataModel.get(list.currentIndex).title;
+        else
+            return "";
     }
 
     /**************************************************************
