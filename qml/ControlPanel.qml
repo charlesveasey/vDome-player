@@ -206,7 +206,7 @@ Item {
      **************************************************************/
     Item {
         id: vGroup;
-        x: parent.width - vSlider.width-210
+        x: parent.width - vSlider.width-300
         y: 25;
 
         Text { id: volume;
@@ -236,13 +236,13 @@ Item {
      ADDITIONAL SETTINGS
      **************************************************************/
     Item {
-        x: parent.width-305;
+        x: parent.width-395;
 
 
         /**************************************************************
          INPUT SOURCE
          **************************************************************/
-        Text { id: input; x: 135; y: 25;
+        Text { id: input; x: 130; y: 25;
             color: "#ffffff"
             text: qsTr("Input")
             font.pixelSize: 18
@@ -251,7 +251,7 @@ Item {
         }
 
         TextButton {
-            id: inputItem; x: 135; y: 50;
+            id: inputItem; x: input.x; y: 50;
             text: qsTr("media")
             hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
             onClicked: {
@@ -284,6 +284,8 @@ Item {
             onSelectionPopup: {
                 playbackItems.visible = false;
                 playbackItem.visible = true;
+                formatItems.visible = false;
+                formatItem.visible = true;
                 root.selectionPopup();
             }
 
@@ -310,6 +312,17 @@ Item {
                     nextBtn.enabled = false;
                     playbackItem.enabled = false;
                 }
+
+                if (selectedItem == "grid" || selectedItem == "black" || selectedItem == "white"){
+                    formatItem.text = "domemaster";
+                    formatItem.enabled = false;
+                    formatItems.selectedItem = "domemaster";
+                    formatItems.list.currentIndex = 0;
+                }
+                else{
+                    formatItem.enabled = true;
+                }
+
                 socket.sendSource(sourceValue);
                 root.sourcePressed();
             }
@@ -319,10 +332,73 @@ Item {
             }
         }
 
+
+        /**************************************************************
+         INPUT FORMAT
+         **************************************************************/
+        Text { id: formatHeader; x: 212; y: 25;
+            color: "#ffffff"
+            text: qsTr("Format")
+            font.pixelSize: 18
+            font.family: openSansExtraBold.name;
+            font.bold: true;
+        }
+
+        TextButton {
+            id: formatItem; x: formatHeader.x; y: 50;
+            color: "#ffffff"
+            opacity: enabled ? 1.0 : 0.5
+            text: qsTr("domemaster")
+            hit.width: 90; hit.height: 50; hit.x: -5; hit.y: -25;
+            onClicked: {
+                formatItem.visible = false;
+                formatItems.visible = true;
+            }
+        }
+
+        SelectionPanel {
+            id: formatItems; x: formatHeader.x-32; y: 33.25;
+            visible: false
+            width: 125
+            height: 75
+            itemHeight: 40
+
+            Component.onCompleted: {
+                model.append({ name: 'domemaster'   });
+                model.append({ name: 'HD' });
+                //socket.sendFormat("domemaster");
+                selectedItem = 'domemaster';
+            }
+
+            onSelectionPopup: {
+                inputItems.visible = false;
+                inputItem.visible = true;
+                playbackItems.visible = false;
+                playbackItem.visible = true;
+                root.selectionPopup();
+            }
+            onClicked: {
+                formatItem.text = selectedItem;
+                formatItem.visible = true;
+                formatItems.visible = false;
+                if (selectedItem == "domemaster") {
+                    socket.sendFormat("domemaster");
+                }
+                else if (selectedItem == "HD") {
+                    socket.sendFormat("hd");
+                }
+            }
+
+            onExited: {
+                formatItem.visible = true;
+            }
+        }
+
+
         /**************************************************************
          MEDIA PLAYBACK TYPE
          **************************************************************/
-        Text { id: playbackHeader; x: 220; y: 25;
+        Text { id: playbackHeader; x: 315; y: 25;
             color: "#ffffff"
             text: qsTr("Play")
             font.pixelSize: 18
@@ -331,7 +407,7 @@ Item {
         }
 
         TextButton {
-            id: playbackItem; x: 221; y: 50;
+            id: playbackItem; x: playbackHeader.x+1; y: 50;
             opacity: enabled ? 1.0 : 0.5
             text: qsTr("once")
             hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
@@ -342,7 +418,7 @@ Item {
         }
 
         SelectionPanel {
-            id: playbackItems; x: 186.5; y: 33.25;
+            id: playbackItems; x: playbackHeader.x-32; y: 33.25;
             visible: false
             width: 100
             height: 120
@@ -360,6 +436,8 @@ Item {
             onSelectionPopup: {
                 inputItems.visible = false;
                 inputItem.visible = true;
+                formatItems.visible = false;
+                formatItem.visible = true;
                 root.selectionPopup();
             }
             onClicked: {
@@ -378,26 +456,6 @@ Item {
                 playbackItem.visible = true;
             }
         }
-
-
-        /**************************************************************
-         INPUT FORMAT
-         *************************************************************
-        Text { id: format; x: 245; y: 25;
-            color: "#ffffff"
-            text: qsTr("Format")
-            font.pixelSize: 18
-            font.family: openSansExtraBold.name;
-            font.bold: true;
-        }
-
-        Text { id: formatItem; x: 245; y: 50
-            color: "#ffffff"
-            text: qsTr("domemaster")
-            font.pixelSize: 13
-            font.family: openSansSemibold.name;
-            font.bold: true;
-        }*/
 
     }
 

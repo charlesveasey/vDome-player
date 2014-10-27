@@ -10,6 +10,8 @@ Item {
     property string selectedItem: ""
     property bool isMouseAbove: mouseAboveMonitor.containsMouse
     property alias model: sources;
+    property alias list: list;
+
 
     signal selectionPopup;
     signal exited;
@@ -45,10 +47,9 @@ Item {
         hoverEnabled: true
     }
 
-
     Rectangle {
-        color: 'white';
-        opacity: .1;
+        color: '#333333';
+        opacity: .8;
         width: parent.width
         height: parent.height
         radius: 10
@@ -71,7 +72,6 @@ Item {
             if (visible) root.selectionPopup();
         }
 
-
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
@@ -84,8 +84,6 @@ Item {
                 root.clicked();
             }
         }
-
-
 
         delegate: Item {
             height: 23
