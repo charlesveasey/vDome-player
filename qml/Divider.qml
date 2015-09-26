@@ -4,13 +4,13 @@ import QtQuick 2.2
  DIVIDER
  **************************************************************/
 Image {
-    property real mouseDeltaX: 0;
-    property real cachedX: 240;
+    property real defaultX: parent.width-.25*parent.width;
+    property real cachedX: defaultX;
     property real cachedW: root.parent.width;
-
+    property real mouseDeltaX: 0;
 
     id: root;
-    x: 240; y: 124; source: "../images/divider.png"; height:parent.height-140
+    x: defaultX; y: 124; source: "../images/divider.png"; height:parent.height-140
     opacity: x <= 150 ? x/150 :
                         x > parent.width-150 ? nMap(x, parent.width-150, parent.width, 1, 0) : 1
 

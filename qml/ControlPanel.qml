@@ -214,6 +214,7 @@ Item {
             x: 3;
             y: 0;
             color: "#ffffff"
+            opacity: vSlider.enabled ? 1.0 : 0.5
             text: qsTr("Volume")
             font.pixelSize: 18
             font.family: openSansExtraBold.name;
@@ -343,6 +344,7 @@ Item {
          **************************************************************/
         Text { id: formatHeader; x: 212; y: 25;
             color: "#ffffff"
+            opacity: formatItem.enabled ? 1.0 : 0.5
             text: qsTr("Format")
             font.pixelSize: 18
             font.family: openSansExtraBold.name;
@@ -405,6 +407,7 @@ Item {
          **************************************************************/
         Text { id: playbackHeader; x: 315; y: 25;
             color: "#ffffff"
+            opacity: playbackItem.enabled ? 1.0 : 0.5
             text: qsTr("Play")
             font.pixelSize: 18
             font.family: openSansExtraBold.name;

@@ -9,13 +9,11 @@ Item{
     anchors.fill: parent.fill;
 
     Grid{
-        columns:  2;
-        spacing: 5;
-        y: 20;
-
+        columns: 2;
+        spacing: 10;
         width: 400
         height: 100;
-
+        y: 20;
 
         Text {
             width: 225;

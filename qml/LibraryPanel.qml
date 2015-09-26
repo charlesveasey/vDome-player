@@ -55,7 +55,7 @@ Item {
         id: libraryTab;
         x: 19;
         y: checked ? 15 : 17;
-        text: qsTr("Libary")
+        text: qsTr("Media")
         hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
         checked: true;
         onClicked: {

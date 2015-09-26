@@ -45,7 +45,7 @@ Item {
         id:playlistTitle
         x: 25; y: 150;
         color: "#ffffff";
-        text: qsTr("New Playlist")
+        text: qsTr("")
         font.pixelSize: 17
         font.family: openSansSemibold.name;
         font.bold: true;

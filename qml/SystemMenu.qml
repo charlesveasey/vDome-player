@@ -16,7 +16,7 @@ MenuBar {
         title: "Playlist"
 
         MenuItem {
-            text: "Add Media"
+            text: "Add"
             onTriggered: playlistPanel.add();
         }
 
@@ -57,7 +57,7 @@ MenuBar {
     Menu {
         title: "Library"
         MenuItem {
-            text: "Add Media"
+            text: "Add"
             onTriggered: libraryPanel.add();
         }
         MenuItem {
@@ -77,7 +77,7 @@ MenuBar {
         MenuItem {
             text: "Default"
             onTriggered: {
-                divider.x = 240;
+                divider.x = divider.defaultX;
                 playlistPanel.visible = true;
                 libraryPanel.visible = true;
             }
@@ -90,7 +90,7 @@ MenuBar {
             onTriggered: {
                 if (checked && viewLibraryMenuItem.checked){
                     window.height = window.defaultH;
-                    divider.x = 240;
+                    divider.x = divider.defaultX;
                 }
                 else if (checked && !viewLibraryMenuItem.checked){
                     window.height = window.defaultH;
@@ -114,7 +114,7 @@ MenuBar {
             onTriggered: {
                 if (checked && viewPlaylistMenuItem.checked){
                     window.height = window.defaultH;
-                    divider.x = 240;
+                    divider.x = divider.defaultX;
                 }
                 else if (checked  && !viewPlaylistMenuItem.checked){
                     window.height = window.defaultH;
@@ -137,6 +137,10 @@ MenuBar {
      **************************************************************/
     Menu {
         title: "Settings"
+        MenuItem {
+            text: "Transform"
+            onTriggered: settings.open("transform");
+        }
         MenuItem {
             text: "Library"
             onTriggered: settings.open("library");

@@ -10,9 +10,8 @@ Window {
     id: root
 
     title: "Settings"
-    width: 350; height: 265
-    minimumWidth: 350; minimumHeight: 265;
-    maximumWidth: 350; maximumHeight: 265;
+    width: 400; height: 265
+    minimumWidth: 400; minimumHeight: 265;
     color: '#111'
     opacity: 1
 
@@ -40,12 +39,29 @@ Window {
          LIBRARY SETTINGS TAB
          **************************************************************/
         TabButton {
+            id: settingsTransformTab;
+            y: checked ? 0 : 2;
+            text: qsTr("Transform")
+            hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
+            checked: false;
+            onClicked: {
+                settingsLibraryTab.checked = false;
+                settingsSocketTab.checked = false;
+                settingsStartupTab.checked = false;
+            }
+        }
+
+        /**************************************************************
+         LIBRARY SETTINGS TAB
+         **************************************************************/
+        TabButton {
             id: settingsLibraryTab;
             y: checked ? 0 : 2;
             text: qsTr("Libary")
             hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
-            checked: true;
+            checked: false;
             onClicked: {
+                settingsTransformTab.checked = false;
                 settingsSocketTab.checked = false;
                 settingsStartupTab.checked = false;
             }
@@ -61,6 +77,7 @@ Window {
             hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
             checked: false;
             onClicked: {
+                settingsTransformTab.checked = false;
                 settingsLibraryTab.checked = false;
                 settingsStartupTab.checked = false;
             }
@@ -77,6 +94,7 @@ Window {
             hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
             checked: false;
             onClicked: {
+                settingsTransformTab.checked = false;
                 settingsLibraryTab.checked = false;
                 settingsSocketTab.checked = false;
             }
@@ -92,7 +110,15 @@ Window {
         y: 55;
         width: parent.width;
         height: parent.height-y*2;
-        color: '#223138'
+        color: '#212121'
+
+        SettingsTransform{
+             id: settingsTransform;
+             visible: settingsTransformTab.checked;
+             x: 20;
+             y: 20;
+             z: 5;
+        }
 
         SettingsLibrary{
              id: settingsLibrary;
@@ -211,17 +237,26 @@ Window {
      LOAD SETTINGS FROM DB
      **************************************************************/
     function open(tab){
-        if (tab === 'library'){
+        if (tab === 'transform'){
+            settingsTransformTab.checked = true;
+            settingsLibraryTab.checked = false;
+            settingsSocketTab.checked = false;
+            settingsStartupTab.checked = false;
+        }
+        else if (tab === 'library'){
+            settingsTransformTab.checked = false;
             settingsLibraryTab.checked = true;
             settingsSocketTab.checked = false;
             settingsStartupTab.checked = false;
         }
         else if (tab === 'socket'){
+            settingsTransformTab.checked = false;
             settingsLibraryTab.checked = false;
             settingsSocketTab.checked = true;
             settingsStartupTab.checked = false;
         }
         else if (tab === 'startup'){
+            settingsTransformTab.checked = false;
             settingsLibraryTab.checked = false;
             settingsSocketTab.checked = false;
             settingsStartupTab.checked = true;

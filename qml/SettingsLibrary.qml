@@ -81,7 +81,7 @@ Item {
 
            Button {
                 text: qsTr("Clear")
-                x: 250;
+                x: 240;
                 y: -3
 
                 width: 50;

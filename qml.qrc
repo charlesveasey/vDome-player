@@ -68,5 +68,6 @@
         <file>qml/SettingsStartup.qml</file>
         <file>qml/Settings.qml</file>
         <file>qml/SystemMenu.qml</file>
+        <file>qml/SettingsTransform.qml</file>
     </qresource>
 </RCC>
