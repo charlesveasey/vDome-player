@@ -72,6 +72,8 @@ Item {
      UDPATE LIBRARY ITEM
      **************************************************************/
     function updateLibraryItem(title, author, duration, file, mime) {
+        file = plist.convertToNativePath(file);
+
         var db = openDB();
         db.transaction(
             function(tx) {
@@ -89,14 +91,16 @@ Item {
      UDPATE LIBRARY ITEM DURATION
      **************************************************************/
     function updateLibraryItemDuration(file, duration) {
+        file = plist.convertToNativePath(file);
+
         var db = openDB();
         db.transaction(
             function(tx) {
+
                tx.executeSql('UPDATE library SET duration = '   + duration + ', '+
                                                   'timestamp = '  + new Date().getTime() + ' ' +
                               'WHERE file = "' + file + '"');
             })
-
     }
 
     /**************************************************************

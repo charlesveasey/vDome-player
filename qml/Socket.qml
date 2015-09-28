@@ -30,25 +30,34 @@ Item {
 
         onMessage: {
             if (address == "/input/position") {
+
+
                 if (controlPanel.cType == "video") {
-                    controlPanel.positionValue = msg;
-                    controlPanel.time = secondsToHms(controlPanel.cDuration*msg);
-                    if (controlPanel.positionValue*controlPanel.duration >= controlPanel.duration){
+                   if (Number.fromLocaleString(msg) === null)
+                        controlPanel.positionValue = 0;
+                   else
+                       controlPanel.positionValue = Number.fromLocaleString (msg);
+
+                    controlPanel.time = secondsToHms(controlPanel.cDuration* Number.fromLocaleString (msg));
+
+                   if (controlPanel.positionValue*controlPanel.duration >= controlPanel.duration){
                         playlistPanel.next();
-                    }
+                   }
                 }
             }
             else if (address == "/input/duration") {
                 var file = msg.split(",")[0];
                 var dur = parseFloat(msg.split(",")[1]);
                 controlPanel.cDuration = parseFloat(dur);
-                controlPanel.time = secondsToHms(controlPanel.duration);
+
                 db.updateLibraryItemDuration(file, dur)
                 libraryPanel.loadSort();
+
                 var c;
                 for (var i=0; i<playlistPanel.getCount(); i++){
                     c = playlistPanel.getFileByIndex(i);
-                    if (c == file){
+
+                    if (c === file){
                         playlistPanel.setProperty(i, "duration", dur);
                         playlistPanel.sumPlaylistDuration();
                     }

@@ -200,6 +200,10 @@ ApplicationWindow {
     }
 
     function secondsToHms(d) {
+
+        if (d === null)
+            return "00:00:00";
+
         d = Number(d);
         var h = Math.floor(d / 3600);
         var m = Math.floor(d % 3600 / 60);
@@ -213,6 +217,7 @@ ApplicationWindow {
         else        ms = m;
         if (s < 10) ss = "0" + s;
         else        ss = s;
+
         return hs + ":" + ms + ":" + ss;
     }
 

@@ -23,6 +23,7 @@ public:
     Q_INVOKABLE void save(QString filename, QVariant data);
     Q_INVOKABLE QString convertPath(QString filename);
     Q_INVOKABLE QString getMimeType(QString filename);
+    Q_INVOKABLE QString convertToNativePath(QString filename);
 
 private:
     QMimeDatabase data;

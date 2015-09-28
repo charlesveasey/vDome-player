@@ -107,3 +107,11 @@ QString Playlist::convertPath(QString filename){
 
     return filepath;
 }
+
+QString Playlist::convertToNativePath(QString filename){
+    QString filepath;
+    QDir file;
+    filepath = file.toNativeSeparators(filename);
+    return filepath;
+}
+
