@@ -43,7 +43,7 @@ Item{
                 y: 2;
                 width:225;
                 value: .5;
-                onValueChanged: socket.sendScale(value*2.0);
+                onValueChanged: if(socket) socket.sendScale(value*2.0);
             }
 
             TextInput {
@@ -73,7 +73,7 @@ Item{
                 y: 2;
                 width:225;
                 value: .5
-                onValueChanged: socket.sendRotate(value * 360 - 180);
+                onValueChanged: if(socket) socket.sendRotate(value * 360 - 180);
             }
 
             TextInput {
@@ -103,7 +103,7 @@ Item{
                 y: 2;
                 width:225;
                 value: .5;
-                onValueChanged: socket.sendTilt(value * 360 - 180) ;
+                onValueChanged: if(socket) socket.sendTilt(value * 360 - 180) ;
             }
 
             TextInput {
