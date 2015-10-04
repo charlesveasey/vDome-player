@@ -57,7 +57,7 @@ Item {
                 for (var i=0; i<playlistPanel.getCount(); i++){
                     c = playlistPanel.getFileByIndex(i);
 
-                    if (c === file){
+                    if (c === plist.convertToNativePath(file)){
                         playlistPanel.setProperty(i, "duration", dur);
                         playlistPanel.sumPlaylistDuration();
                     }
