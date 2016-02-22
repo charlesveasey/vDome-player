@@ -31,7 +31,6 @@ Item {
         onMessage: {
             if (address == "/input/position") {
 
-
                 if (controlPanel.cType == "video") {
                    if (Number.fromLocaleString(msg) === null)
                         controlPanel.positionValue = 0;
@@ -158,5 +157,19 @@ Item {
      **************************************************************/
     function sendTilt(value){
        send("/input/tilt/", value);
+    }
+
+    /**************************************************************
+     SEND ALL KEYBOARD PRESSES
+     **************************************************************/
+    function sendKeyPressed(value){
+       send("/key/press/", value);
+    }
+
+    /**************************************************************
+     SEND ALL KEYBOARD RELEASES
+     **************************************************************/
+    function sendKeyReleased(value){
+       send("/key/release/", value);
     }
 }

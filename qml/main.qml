@@ -25,6 +25,7 @@ ApplicationWindow {
     //flags: Qt.FramelessWindowHint
 
 
+
     onWidthChanged: {
         divider.x = nMap(divider.cachedX, 0, divider.cachedW, 0, width)
     }

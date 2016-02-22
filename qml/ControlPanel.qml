@@ -60,6 +60,10 @@ Item {
             libraryPanel.groupShiftActive = true;
             playlistPanel.groupShiftActive = true;
         }
+        if (!event.isAutoRepeat){
+            socket.sendKeyPressed(event.key);
+            console.log("keyPress: " + event.key);
+        }
     }
     Keys.onReleased: {
         if (event.key == 16777249 || event.modifiers == Qt.ControlModifier){
@@ -69,6 +73,10 @@ Item {
         else if (event.key == 16777248 || event.modifiers == Qt.ShiftModifier){
             libraryPanel.groupShiftActive = false;
             playlistPanel.groupShiftActive = false;
+        }
+        if (!event.isAutoRepeat){
+            socket.sendKeyReleased(event.key);
+            console.log("keyReleased");
         }
     }
 
