@@ -149,7 +149,7 @@ Item {
     }
 
     /**************************************************************
-     PAUSE
+     NEXT
      **************************************************************/
     ImageButton { id:nextBtn; x: 119; y: 36; imageSource: "../images/right-arrow.png"
         hit.width:width+8; hit.height: height+32; hit.x: -4; hit.y: -14;
@@ -665,7 +665,7 @@ Item {
      SEEK UPDATE FOR IMAGE TIMER
      **************************************************************/
     function seek() {
-        timerCnt = 100*cDuration*positionValue;
+        timerCnt = (100*cDuration*positionValue).toFixed(2);
         socket.sendSeek(positionValue);
     }
 

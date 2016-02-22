@@ -10,6 +10,7 @@ Item {
     property real sendPort: 3334;
     property real receivePort: 3333;
     property string address: "";
+    property  real seekValue: -1;
 
     /**************************************************************
      OSC SEND
@@ -31,8 +32,10 @@ Item {
         onMessage: {
             if (address == "/input/position") {
 
-
                 if (controlPanel.cType == "video") {
+                    if (msg == "-inf"){
+                        return
+                    }
                    if (Number.fromLocaleString(msg) === null)
                         controlPanel.positionValue = 0;
                    else
@@ -108,6 +111,7 @@ Item {
      SEND SEEK
      **************************************************************/
     function sendSeek(pos){
+       seekValue = pos;
        send("/input/seek/", pos);
     }
 
