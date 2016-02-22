@@ -53,7 +53,7 @@ Item{
                 color: '#fff'
                 font.pixelSize: 12
                 font.family: openSansExtraBold.name
-                text: Math.round(scaleSlider.value * 2.0 * 100.0) / 100.0;
+                text: (Math.round(scaleSlider.value * 2.0 * 100.0) / 100.0).toFixed(2);
                 onAccepted: {
                     scaleSlider.value = Number(displayText) / 2.0;
                 }
