@@ -65,7 +65,6 @@
         <file>images/drag-icon.png</file>
         <file>qml/SettingsLibrary.qml</file>
         <file>qml/SettingsSocket.qml</file>
-        <file>qml/SettingsStartup.qml</file>
         <file>qml/Settings.qml</file>
         <file>qml/SystemMenu.qml</file>
         <file>qml/SettingsTransform.qml</file>

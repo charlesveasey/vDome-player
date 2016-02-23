@@ -1,4 +1,5 @@
 #include "syscmds.h"
+#include <QDir>
 
 Syscmds::Syscmds(QQuickItem *parent) : QQuickItem(parent){
 }
@@ -7,8 +8,9 @@ void Syscmds::deleteFile(QString filename) {
     QFile::remove(filename);
 }
 
-void Syscmds::executeFile(QString filename) {
-    process.start(filename);
+void Syscmds::executeFile() {
+    QString path = QCoreApplication::applicationDirPath();
+    process.start( path + "/renderer/vdome.app");
 }
 
 /* Function to get the OS detail based on which

@@ -22,8 +22,6 @@ Window {
     Component.onCompleted: {
         db.createSettings();
         load();
-        if (settingsStartup.launch)
-             syscmds.executeFile(settingsStartup.filepath);
     }
 
     Component.onDestruction: {
@@ -47,7 +45,6 @@ Window {
             onClicked: {
                 settingsLibraryTab.checked = false;
                 settingsSocketTab.checked = false;
-                settingsStartupTab.checked = false;
             }
         }
 
@@ -63,7 +60,6 @@ Window {
             onClicked: {
                 settingsTransformTab.checked = false;
                 settingsSocketTab.checked = false;
-                settingsStartupTab.checked = false;
             }
         }
 
@@ -135,14 +131,6 @@ Window {
             y: 20;
             z: 5;
         }
-
-        SettingsStartup{
-            id: settingsStartup;
-            visible: settingsStartupTab.checked;
-            x: 20;
-            y: 20;
-            z: 5;
-        }
     }
 
     /**************************************************************
@@ -179,8 +167,6 @@ Window {
         settingsObject.socketHost = socket.host;
         settingsObject.socketSend = socket.sendPort;
         settingsObject.socketReceive = socket.receivePort;
-        settingsObject.startupLaunch = settingsStartup.launch ? 1 : 0;
-        settingsObject.startupFilepath = settingsStartup.filepath;
 
         db.updateSettings(settingsObject);
         libraryPanel.slide = settingsObject.librarySlide;
@@ -222,9 +208,6 @@ Window {
             socket.sendPort = parseInt(o.socketSend);
             socket.receivePort = parseInt(o.socketReceive);
 
-            settingsStartup.launch = o.startupLaunch ? 1 : 0;
-            settingsStartup.filepath = o.startupFilepath == "null" || o.startupFilepath == null ? "" : o.startupFilepath;
-
             for (var p in  o){
                 settingsObject[p] = o[p]
             }
@@ -241,25 +224,16 @@ Window {
             settingsTransformTab.checked = true;
             settingsLibraryTab.checked = false;
             settingsSocketTab.checked = false;
-            settingsStartupTab.checked = false;
         }
         else if (tab === 'library'){
             settingsTransformTab.checked = false;
             settingsLibraryTab.checked = true;
             settingsSocketTab.checked = false;
-            settingsStartupTab.checked = false;
         }
         else if (tab === 'socket'){
             settingsTransformTab.checked = false;
             settingsLibraryTab.checked = false;
             settingsSocketTab.checked = true;
-            settingsStartupTab.checked = false;
-        }
-        else if (tab === 'startup'){
-            settingsTransformTab.checked = false;
-            settingsLibraryTab.checked = false;
-            settingsSocketTab.checked = false;
-            settingsStartupTab.checked = true;
         }
         visible = true;
     }

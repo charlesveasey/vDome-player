@@ -149,10 +149,6 @@ MenuBar {
             text: "Socket"
             onTriggered: settings.open("socket");
         }
-        MenuItem {
-            text: "Startup"
-            onTriggered: settings.open("startup");
-        }
     }
 
 }
