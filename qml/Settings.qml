@@ -75,24 +75,6 @@ Window {
             onClicked: {
                 settingsTransformTab.checked = false;
                 settingsLibraryTab.checked = false;
-                settingsStartupTab.checked = false;
-            }
-        }
-
-
-        /**************************************************************
-         STARTUP SETTINGS TAB
-         **************************************************************/
-        TabButton {
-            id: settingsStartupTab;
-            y: checked ? 0 : 2;
-            text: qsTr("Startup")
-            hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
-            checked: false;
-            onClicked: {
-                settingsTransformTab.checked = false;
-                settingsLibraryTab.checked = false;
-                settingsSocketTab.checked = false;
             }
         }
 
