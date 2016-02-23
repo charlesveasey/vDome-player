@@ -21,3 +21,5 @@ HEADERS += \
     syscmds.h
 
 OTHER_FILES +=
+
+CONFIG += static

@@ -8,7 +8,7 @@ Item {
      OPEN DATABASE
      **************************************************************/
     function openDB(){
-        return LocalStorage.openDatabaseSync("vDomePlayer", "1.0", "vDome Player Database", 1000000);
+        return LocalStorage.openDatabaseSync("vDome", "1.0", "vDome Database", 1000000);
     }
 
 
