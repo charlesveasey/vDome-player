@@ -8,15 +8,13 @@ import QtQuick.Controls.Styles 1.2
  **************************************************************/
 Window {
     id: root
-
     title: "Settings"
-    width: 400; height: 265
+    width: window.width/2; height: window.height
     minimumWidth: 400; minimumHeight: 265;
     color: '#111'
     opacity: 1
-
+    property int  sliderInputTextPad: 100
     flags: Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowSystemMenuHint
-
     property var settingsObject;
 
     Component.onCompleted: {
@@ -34,15 +32,51 @@ Window {
         spacing: 30
 
         /**************************************************************
-         LIBRARY SETTINGS TAB
+         TRANSFORM SETTINGS TAB
          **************************************************************/
         TabButton {
-            id: settingsTransformTab;
+            id: settingsInputTab;
             y: checked ? 0 : 2;
-            text: qsTr("Transform")
+            text: qsTr("Input")
             hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
             checked: false;
             onClicked: {
+                settingsProjectorTab.checked = false;
+                settingsWindowTab.checked = false;
+                settingsLibraryTab.checked = false;
+                settingsSocketTab.checked = false;
+            }
+        }
+
+        /**************************************************************
+         PROJECTOR SETTINGS TAB
+         **************************************************************/
+        TabButton {
+            id: settingsProjectorTab;
+            y: checked ? 0 : 2;
+            text: qsTr("Projector")
+            hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
+            checked: false;
+            onClicked: {
+                settingsInputTab.checked = false;
+                settingsWindowTab.checked = false;
+                settingsLibraryTab.checked = false;
+                settingsSocketTab.checked = false;
+            }
+        }
+
+        /**************************************************************
+         WINDOW SETTINGS TAB
+         **************************************************************/
+        TabButton {
+            id: settingsWindowTab;
+            y: checked ? 0 : 2;
+            text: qsTr("Window")
+            hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
+            checked: false;
+            onClicked: {
+                settingsInputTab.checked = false;
+                settingsProjectorTab.checked = false;
                 settingsLibraryTab.checked = false;
                 settingsSocketTab.checked = false;
             }
@@ -58,7 +92,9 @@ Window {
             hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
             checked: false;
             onClicked: {
-                settingsTransformTab.checked = false;
+                settingsProjectorTab.checked = false;
+                settingsWindowTab.checked = false;
+                settingsInputTab.checked = false;
                 settingsSocketTab.checked = false;
             }
         }
@@ -73,7 +109,9 @@ Window {
             hit.width: 65; hit.height: 50; hit.x: -5; hit.y: -25;
             checked: false;
             onClicked: {
-                settingsTransformTab.checked = false;
+                settingsInputTab.checked = false;
+                settingsWindowTab.checked = false;
+                settingsProjectorTab.checked = false;
                 settingsLibraryTab.checked = false;
             }
         }
@@ -90,14 +128,27 @@ Window {
         height: parent.height-y*2;
         color: '#212121'
 
-        SettingsTransform{
-             id: settingsTransform;
-             visible: settingsTransformTab.checked;
+        SettingsInput{
+             id: settingsInput;
+             visible: settingsInputTab.checked;
              x: 20;
              y: 20;
              z: 5;
         }
-
+        SettingsProjector{
+            id: settingsProjector;
+            visible: settingsProjectorTab.checked;
+            x: 20;
+            y: 20;
+            z: 5;
+        }
+        SettingsWindow{
+            id: settingsWindow;
+            visible: settingsWindowTab.checked;
+            x: 20;
+            y: 20;
+            z: 5;
+        }
         SettingsLibrary{
              id: settingsLibrary;
              visible: settingsLibraryTab.checked;
@@ -105,7 +156,6 @@ Window {
              y: 20;
              z: 5;
         }
-
         SettingsSocket{
             id: settingsSocket;
             visible: settingsSocketTab.checked;
@@ -136,8 +186,6 @@ Window {
              onClicked: save();
          }
     }
-
-
 
     /**************************************************************
      SAVE ACTION
@@ -193,8 +241,6 @@ Window {
             for (var p in  o){
                 settingsObject[p] = o[p]
             }
-
-
         }
     }
 
@@ -202,22 +248,42 @@ Window {
      LOAD SETTINGS FROM DB
      **************************************************************/
     function open(tab){
-        if (tab === 'transform'){
-            settingsTransformTab.checked = true;
+        if (tab === 'input'){
+            settingsInputTab.checked = true;
             settingsLibraryTab.checked = false;
             settingsSocketTab.checked = false;
+            settingsProjectorTab.checked = false;
+            settingsWindowTab.checked = false;
+        }
+        else if (tab === 'projector'){
+            settingsInputTab.checked = false;
+            settingsLibraryTab.checked = false;
+            settingsSocketTab.checked = false;
+            settingsProjectorTab.checked = true;
+            settingsWindowTab.checked = false;
+        }
+        else if (tab === 'window'){
+            settingsInputTab.checked = false;
+            settingsLibraryTab.checked = false;
+            settingsSocketTab.checked = false;
+            settingsProjectorTab.checked = false;
+            settingsWindowTab.checked = true;
         }
         else if (tab === 'library'){
-            settingsTransformTab.checked = false;
+            settingsInputTab.checked = false;
             settingsLibraryTab.checked = true;
             settingsSocketTab.checked = false;
+            settingsProjectorTab.checked = false;
+            settingsWindowTab.checked = false;
         }
         else if (tab === 'socket'){
-            settingsTransformTab.checked = false;
+            settingsInputTab.checked = false;
             settingsLibraryTab.checked = false;
             settingsSocketTab.checked = true;
+            settingsProjectorTab.checked = false;
+            settingsWindowTab.checked = false;
         }
         visible = true;
     }
 
-}
+}////////////////////////////////////////////

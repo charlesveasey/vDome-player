@@ -9,25 +9,73 @@ import QtQuick.Dialogs 1.1
 Item{
 
     anchors.fill: parent.fill;
+    property int columnOffset: 10;
+    property int columnSpacing: 12;
+
+
+
+
+
 
     Column{
-        spacing: 12;
+        y:columnOffset;
+        spacing: columnSpacing;
         width: parent.width
 
         Text {
             width: 225;
             color: '#fff'
-            font.pixelSize: 14
+            font.pixelSize: 16
+            font.family: openSansExtraBold.name
+            text: qsTr("Input")
+            font.bold : true;
+        }
+    }
+
+
+
+
+
+    Column{
+        y:columnOffset + 45
+        spacing: columnSpacing;
+        width: parent.width
+
+        Text {
+            width: 225;
+            color: '#fff'
+            font.pixelSize: 16
             font.family: openSansExtraBold.name
             text: qsTr("Flip")
-
+            font.bold : true;
             CheckBox {
-                id: flipCheckbox
+                id: flipCheckbox2
                 width: parent.width;
                 height: 20;
                 x: 75;
+                y: 2
                 onCheckedChanged: socket.sendFlip((checked ? "on" : "off"));
             }
+        }
+    }
+
+
+
+
+
+
+    Column{
+        y:columnOffset + 95
+        spacing: columnSpacing;
+        width: parent.width
+
+        Text {
+            width: 225;
+            color: '#fff'
+            font.pixelSize: 16
+            font.family: openSansExtraBold.name
+            text: qsTr("Transform")
+            font.bold : true;
         }
 
         Text {
@@ -41,14 +89,15 @@ Item{
                 id: scaleSlider;
                 x: 75;
                 y: 2;
-                width:225;
+                width: settings.width-x-settings.sliderInputTextPad
                 value: .5;
-                onValueChanged: if(socket) socket.sendScale(value*2.0);
+                //onValueChanged: if(socket) socket.sendScale(value*2.0);
             }
 
             TextInput {
                 id: scaleText;
-                x: 325;
+                x: scaleSlider.width + settings.sliderInputTextPad;
+                y: 2
                 width: 25;
                 color: '#fff'
                 font.pixelSize: 12
@@ -71,14 +120,15 @@ Item{
                 id: rotateSlider;
                 x: 75;
                 y: 2;
-                width:225;
+                width: settings.width-x-settings.sliderInputTextPad
                 value: .5
-                onValueChanged: if(socket) socket.sendRotate(value * 360 - 180);
+                //onValueChanged: if(socket) socket.sendRotate(value * 360 - 180);
             }
 
             TextInput {
                 id: rotateText;
-                x: 325;
+                x: rotateSlider.width + settings.sliderInputTextPad;
+                y: 2
                 width: 25;
                 color: '#fff'
                 font.pixelSize: 12
@@ -101,14 +151,15 @@ Item{
                 id:tiltSlider;
                 x: 75;
                 y: 2;
-                width:225;
+                width: settings.width-x-settings.sliderInputTextPad
                 value: .5;
                 onValueChanged: if(socket) socket.sendTilt(value * 360 - 180) ;
             }
 
             TextInput {
                 id: tiltText;
-                x: 325;
+                x: tiltSlider.width + settings.sliderInputTextPad;
+                y: 2;
                 width: 25;
                 color: '#fff'
                 font.pixelSize: 12
@@ -119,10 +170,11 @@ Item{
                 }
             }
 
-
-        }
-
+        }   
     }
+
+
+
 }
 
 

@@ -67,6 +67,8 @@
         <file>qml/SettingsSocket.qml</file>
         <file>qml/Settings.qml</file>
         <file>qml/SystemMenu.qml</file>
-        <file>qml/SettingsTransform.qml</file>
+        <file>qml/SettingsInput.qml</file>
+        <file>qml/SettingsProjector.qml</file>
+        <file>qml/SettingsWindow.qml</file>
     </qresource>
 </RCC>

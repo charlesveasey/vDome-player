@@ -132,14 +132,23 @@ MenuBar {
         }
     }
 
+
     /**************************************************************
      SETTINGS MENU
      **************************************************************/
     Menu {
         title: "Settings"
         MenuItem {
-            text: "Transform"
-            onTriggered: settings.open("transform");
+            text: "Input"
+            onTriggered: settings.open("input");
+        }
+        MenuItem {
+            text: "Projector"
+            onTriggered: settings.open("projector");
+        }
+        MenuItem {
+            text: "Window"
+            onTriggered: settings.open("window");
         }
         MenuItem {
             text: "Library"
@@ -151,4 +160,4 @@ MenuBar {
         }
     }
 
-}
+}///////////////////////////////////////////

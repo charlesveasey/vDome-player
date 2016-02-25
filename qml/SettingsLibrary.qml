@@ -6,70 +6,87 @@ import QtQuick.Dialogs 1.1
  LIBRARY SETTINGS
  **************************************************************/
 Item {
-    property real imageDuration: 10;
-    property bool clearPending: false;
+    property real imageDuration: 10
+    property bool clearPending: false
+    property int columnOffset: 10
+    property int columnSpacing: 12
+    property int column2x: 250
 
-    Row {
+    Column{
+        y: columnOffset
+        spacing: columnSpacing;
+        width: parent.width
 
-        y: 20
-        spacing: 40;
+        Text {
+            width: 225;
+            color: '#fff'
+            font.pixelSize: 16
+            font.family: openSansExtraBold.name
+            text: qsTr("Library")
+            font.bold : true;
+        }
+    }
 
-        width: 400
-        height: 125;
+    Column {
+        y: columnOffset + 45;
+        spacing: columnSpacing;
 
         Text {
             width: 200;
-            text: qsTr("Image duration:")
+            text: qsTr("Image Duration")
             color: '#fff'
             font.pixelSize: 14
             font.family: openSansExtraBold.name
-        }
 
-        TextInput{
-            id:durationText
-            x: 200;
-            color: '#fff'
-            text: secondsToHms(imageDuration);
-            font.pixelSize: 14
-            font.family: openSansExtraBold.name
-            clip: true;
-            activeFocusOnPress: true
-            readOnly: false;
-            selectByMouse: true;
-            enabled: false;
-            visible: enabled;
-            onAccepted: {
-                imageDuration = hmsToSeconds(displayText);
-                enabled = false;
-                libraryPanel.updateDurationTmp(imageDuration);
+
+
+            TextInput{
+                id:durationText
+                x: column2x;
+                color: '#fff'
+                text: secondsToHms(imageDuration);
+                font.pixelSize: 14
+                font.family: openSansExtraBold.name
+                clip: true;
+                activeFocusOnPress: true
+                readOnly: false;
+                selectByMouse: true;
+                enabled: false;
+                visible: enabled;
+                onAccepted: {
+                    imageDuration = hmsToSeconds(displayText);
+                    enabled = false;
+                    libraryPanel.updateDurationTmp(imageDuration);
+                }
             }
-        }
-        Text {
-            width: 200;
-            color: '#fff'
-            font.pixelSize: 14
-            font.family: openSansExtraBold.name
-            text: secondsToHms(imageDuration);
-            x: 200;
-            visible: !durationText.enabled;
+            Text {
+                width: 200;
+                color: '#fff'
+                font.pixelSize: 14
+                font.family: openSansExtraBold.name
+                text: secondsToHms(imageDuration);
+                x: column2x;
+                visible: !durationText.enabled;
 
-            MouseArea{
-                width: parent.width;
-                height: parent.height;
-                onPressed: {
-                    durationText.enabled = true;
-                    durationText.forceActiveFocus();
+                MouseArea{
+                    width: parent.width;
+                    height: parent.height;
+                    onPressed: {
+                        durationText.enabled = true;
+                        durationText.forceActiveFocus();
+                    }
                 }
             }
 
         }
+
     }
 
 
     Column {
         x: 0
-        y: 75
-       spacing: 8;
+        y: columnOffset + 100
+       spacing: columnSpacing;
 
 
        Text {
@@ -81,7 +98,7 @@ Item {
 
            Button {
                 text: qsTr("Clear")
-                x: 240;
+                x: column2x;
                 y: -3
 
                 width: 50;
