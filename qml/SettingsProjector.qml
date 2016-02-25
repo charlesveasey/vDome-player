@@ -63,7 +63,7 @@ Item{
      ENABLE
      **************************************************************/
     Column{
-        y: columnOffset + 50;
+        y: columnOffset + 65;
         spacing: columnSpacing;
 
         Text {
@@ -90,7 +90,7 @@ Item{
      VIEW
      **************************************************************/
     Column{
-        y: columnOffset + 100;
+        y: columnOffset + 90;
         spacing: columnSpacing;
 
         Text {
@@ -138,7 +138,7 @@ Item{
      WARP
      **************************************************************/
     Column{
-        y: columnOffset + 50;
+        y: columnOffset + 200;
         spacing: columnSpacing;
 
         Text {
@@ -222,7 +222,7 @@ Item{
      BLEND
      **************************************************************/
     Column{
-        y: columnOffset + 150;
+        y: columnOffset + 300;
         spacing: columnSpacing;
 
         Text {
@@ -306,127 +306,119 @@ Item{
     /**************************************************************
      COLOR
      **************************************************************/
-    Item{
-        y: 410;
-        Column{
-            spacing: 12;
 
-            Text {
-                width: 225;
-                color: '#fff'
-                font.pixelSize: headerSize
-                font.family: openSansExtraBold.name
-                text: qsTr("Color")
-                font.bold : true;
+    Column{
+        spacing: columnSpacing;
+        y: columnOffset + 400;
 
-            }
-            Text {
-                width: 225;
-                color: '#fff'
-                font.pixelSize: 14
-                font.family: openSansExtraBold.name
-                text: qsTr("Saturation")
+        Text {
+            width: 225;
+            color: '#fff'
+            font.pixelSize: headerSize
+            font.family: openSansExtraBold.name
+            text: qsTr("Color")
+            font.bold : true;
 
-                Slider {
-                    id: saturationSlider;
-                     x: column2x;
-                    y: 2;
-                    width: settings.width-x-settings.sliderInputTextPad
-                    value: 1;
-                    //onValueChanged: if(socket) socket.sendScale(value*100);
-                }
+        }
+        Text {
+            width: 225;
+            color: '#fff'
+            font.pixelSize: 14
+            font.family: openSansExtraBold.name
+            text: qsTr("Saturation")
 
-                TextInput {
-                    id: saturationInput;
-                    x: saturationSlider.width + settings.sliderInputTextPad;
-                    y: 2
-                    width: 25;
-                    color: '#fff'
-                    font.pixelSize: 12
-                    font.family: openSansExtraBold.name
-                    text: Math.round(saturationSlider.value * 100)
-                    onAccepted: {
-                        saturationSlider.value = (Number(displayText) * 100)
-                    }
-                }
+            Slider {
+                id: saturationSlider;
+                 x: column2x;
+                y: 2;
+                width: settings.width-x-settings.sliderInputTextPad
+                value: 1;
+                //onValueChanged: if(socket) socket.sendScale(value*100);
             }
 
+            TextInput {
+                id: saturationInput;
+                x: saturationSlider.width + settings.sliderInputTextPad;
+                y: 2
+                width: 25;
+                color: '#fff'
+                font.pixelSize: 12
+                font.family: openSansExtraBold.name
+                text: Math.round(saturationSlider.value * 100)
+                onAccepted: {
+                    saturationSlider.value = (Number(displayText) * 100)
+                }
+            }
+        }
 
 
-            /**************************************************************
-             CURVE
-             **************************************************************/
-            Item{
 
-                Text { id: curveHeader; y: 60;
-                    color: "#ffffff"
-                    opacity: curveItem.enabled ? 1.0 : 0.5
-                    text: qsTr("Curve")
-                    font.pixelSize: 12
-                    font.family: openSansExtraBold.name;
+        /**************************************************************
+         CURVE
+         **************************************************************/
+        Item{
+
+            Text { id: curveHeader; y: 60;
+                color: "#ffffff"
+                opacity: curveItem.enabled ? 1.0 : 0.5
+                text: qsTr("Curve")
+                font.pixelSize: 12
+                font.family: openSansExtraBold.name;
+            }
+
+            TextButton {
+                id: curveItem; x:column2x; y: curveHeader.y;
+                color: "#ffffff"
+                opacity: enabled ? 1.0 : 0.5
+                text: qsTr("grey")
+                hit.width: 90; hit.height: 25; hit.x: 0; hit.y: 0;
+                onClicked: {
+                    curveItem.visible = false;
+                    curveItems.visible = true;
+                }
+            }
+
+            SelectionPanel {
+                id: curveItems; x:column2x-25; y:30;
+                visible: false
+                width: 100
+                height: 125
+                itemHeight: 20
+
+                Component.onCompleted: {
+                    model.append({ name: 'grey'});
+                    model.append({ name: 'red' });
+                    model.append({ name: 'green' });
+                    model.append({ name: 'blue' });
+                    selectedItem = 'grey';
                 }
 
-                TextButton {
-                    id: curveItem; x:column2x; y: curveHeader.y;
-                    color: "#ffffff"
-                    opacity: enabled ? 1.0 : 0.5
-                    text: qsTr("grey")
-                    hit.width: 90; hit.height: 25; hit.x: 0; hit.y: 0;
-                    onClicked: {
-                        curveItem.visible = false;
-                        curveItems.visible = true;
+                onSelectionPopup: {
+                    //root.selectionPopup();
+                }
+                onClicked: {
+                    curveItem.text = selectedItem;
+                    curveItem.visible = true;
+                    curveItems.visible = false;
+                    /*if (selectedItem == "grey") {
+                        socket.sendFormat("grey");
                     }
+                    else if (selectedItem == "red") {
+                        socket.sendFormat("red");
+                    }*/
                 }
 
-                SelectionPanel {
-                    id: curveItems; x:column2x-25; y:30;
-                    visible: false
-                    width: 100
-                    height: 125
-                    itemHeight: 20
-
-                    Component.onCompleted: {
-                        model.append({ name: 'grey'});
-                        model.append({ name: 'red' });
-                        model.append({ name: 'green' });
-                        model.append({ name: 'blue' });
-                        selectedItem = 'grey';
-                    }
-
-                    onSelectionPopup: {
-                        //root.selectionPopup();
-                    }
-                    onClicked: {
-                        curveItem.text = selectedItem;
-                        curveItem.visible = true;
-                        curveItems.visible = false;
-                        /*if (selectedItem == "grey") {
-                            socket.sendFormat("grey");
-                        }
-                        else if (selectedItem == "red") {
-                            socket.sendFormat("red");
-                        }*/
-                    }
-
-                    onExited: {
-                        curveItem.visible = true;
-                    }
+                onExited: {
+                    curveItem.visible = true;
                 }
-
-
             }
 
 
         }
 
 
+    }
 
-
-
-
-
-
-    }//Item
 
 
 }////////////////////////////////
