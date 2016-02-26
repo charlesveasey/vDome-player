@@ -12,25 +12,19 @@ Item{
     property int column2x: 250
 
     Column{
-        y: columnOffset
+        y: 0
         spacing: columnSpacing;
-        width: parent.width
+        width: 400
+        height: 100;
 
         Text {
             width: 225;
             color: '#fff'
             font.pixelSize: 16
             font.family: openSansExtraBold.name
-            text: qsTr("Library")
+            text: qsTr("Socket")
             font.bold : true;
         }
-    }
-
-    Column{
-        y: columnOffset + 45
-        spacing: columnSpacing;
-        width: 400
-        height: 100;
 
         Text {
             width: 225;

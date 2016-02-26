@@ -18,7 +18,7 @@ Item{
 
 
     Column{
-        y:columnOffset;
+        y:0;
         spacing: columnSpacing;
         width: parent.width
 
@@ -30,16 +30,7 @@ Item{
             text: qsTr("Input")
             font.bold : true;
         }
-    }
 
-
-
-
-
-    Column{
-        y:columnOffset + 45
-        spacing: columnSpacing;
-        width: parent.width
 
         Text {
             width: 225;
@@ -47,7 +38,7 @@ Item{
             font.pixelSize: 16
             font.family: openSansExtraBold.name
             text: qsTr("Flip")
-            font.bold : true;
+            font.bold : false;
             CheckBox {
                 id: flipCheckbox2
                 width: parent.width;
@@ -57,15 +48,14 @@ Item{
                 onCheckedChanged: socket.sendFlip((checked ? "on" : "off"));
             }
         }
+
     }
 
 
 
 
-
-
     Column{
-        y:columnOffset + 95
+        y:columnOffset + 75
         spacing: columnSpacing;
         width: parent.width
 
@@ -170,7 +160,7 @@ Item{
                 }
             }
 
-        }   
+        }
     }
 
 

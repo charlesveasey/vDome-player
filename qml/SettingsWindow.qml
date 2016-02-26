@@ -21,6 +21,12 @@ Item {
 
          width: 65;
          onClicked: {
+
+                 amodel.append({
+                                  "index":    settingsWindowList.count+1,
+                                  "projectorCount":    2
+                          })
+
         }
     }
 
@@ -36,6 +42,9 @@ Item {
 
          width: 65;
          onClicked: {
+             if (settingsWindowList.count > 1){
+                amodel.remove( settingsWindowList.count-1, 1 );
+             }
         }
     }
 
@@ -70,7 +79,7 @@ Item {
                     x: 255
                     width: 35
                     color: '#fff'
-                    text: "6";
+                    text: projectorCount;
                     font.pixelSize: 14
                     font.family: openSansExtraBold.name
                     clip: true;
@@ -104,7 +113,7 @@ Item {
                     x: column2x;
                     width: 35
                     color: '#fff'
-                    text: "0";
+                    text: "1024";
                     font.pixelSize: 14
                     font.family: openSansExtraBold.name
                     clip: true;
@@ -135,7 +144,7 @@ Item {
                     x: column2x+50;
                     width:225
                     color: '#fff'
-                    text: "1000";
+                    text: "768";
                     font.pixelSize: 14
                     font.family: openSansExtraBold.name
                     clip: true;
@@ -230,20 +239,19 @@ Item {
             index: 1
             projectorCount: 3
         }
-        ListElement {
-            index: 2
-            projectorCount: 3
-        }
     }
 
 
 
      ListView {
+
+         id: settingsWindowList;
          width: 400
-         height: 400
-         y: 0
+         height: settings.height
          model: amodel
          delegate: aDelegate
+
+
      }
 
 

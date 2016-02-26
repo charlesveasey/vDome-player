@@ -51,28 +51,19 @@ Item{
                 font.family: openSansExtraBold.name
                 text: "1"
                 onAccepted: {
-                    indexSlider.value = Number(displayText);
+                    socket.sendProjectorIndex(Number(displayText));
                 }
             }
         }
-    }
 
-
-
-    /**************************************************************
-     ENABLE
-     **************************************************************/
-    Column{
-        y: columnOffset + 65;
-        spacing: columnSpacing;
 
         Text {
             width: 225;
             color: '#fff'
-            font.pixelSize: headerSize
+            font.pixelSize: 14
             font.family: openSansExtraBold.name
             text: qsTr("Enable")
-            font.bold : true;
+            font.bold : false;
 
             CheckBox {
                 id: flipCheckbox
@@ -80,17 +71,20 @@ Item{
                 height: 20;
                 x: column2x;
                 y: 1
-                //onCheckedChanged: socket.sendFlip((checked ? "on" : "off"));
+                checked: true
+                onCheckedChanged: socket.sendProjectorEnable((checked ? "on" : "off"));
             }
         }
     }
+
+
 
 
     /**************************************************************
      VIEW
      **************************************************************/
     Column{
-        y: columnOffset + 90;
+        y: columnOffset + 100;
         spacing: columnSpacing;
 
         Text {
@@ -115,7 +109,7 @@ Item{
                 y: 2;
                 width: settings.width-x-settings.sliderInputTextPad
                 value: 1
-                //onValueChanged: if(socket) socket.sendScale(value*2.0);
+                onValueChanged: if(socket) socket.sendProjectorFOV(value*2.0);
             }
             TextInput {
                 id: scaleText;
@@ -138,7 +132,7 @@ Item{
      WARP
      **************************************************************/
     Column{
-        y: columnOffset + 200;
+        y: columnOffset + 180;
         spacing: columnSpacing;
 
         Text {
@@ -164,7 +158,7 @@ Item{
                 y: 2;
                 width: settings.width-x-settings.sliderInputTextPad
                 value: 1
-                //onValueChanged: if(socket) socket.sendRotate(value * 10); //fix
+                onValueChanged: if(socket) socket.sendProjectorGridX( Math.round( map(gridXSlider.value, 0, 1, 1, 10) ) );
             }
 
             TextInput {
@@ -195,7 +189,7 @@ Item{
                 y: 2;
                 width: settings.width-x-settings.sliderInputTextPad
                 value: 1
-                //onValueChanged: if(socket) socket.sendRotate(value * 10); //fix
+                onValueChanged: if(socket) socket.sendProjectorGridY( Math.round( map(gridYSlider.value, 0, 1, 1, 10) ) );
             }
 
             TextInput {
@@ -222,7 +216,7 @@ Item{
      BLEND
      **************************************************************/
     Column{
-        y: columnOffset + 300;
+        y: columnOffset + 290;
         spacing: columnSpacing;
 
         Text {
@@ -247,7 +241,7 @@ Item{
                 y: 2;
                 width: settings.width-x-settings.sliderInputTextPad
                 value: 1
-                //onValueChanged: if(socket) socket.sendRotate(value * 100);
+                onValueChanged: if(socket) socket.sendProjectorBrightness(value * 100);
             }
 
             TextInput {
@@ -278,7 +272,7 @@ Item{
                 y: 2;
                 width: settings.width-x-settings.sliderInputTextPad
                 value: 1
-                //onValueChanged: if(socket) socket.sendRotate(value * 100); //fix
+                onValueChanged: if(socket) socket.sendProjectorContrast(value * 100); //fix
             }
 
             TextInput {
@@ -309,7 +303,7 @@ Item{
 
     Column{
         spacing: columnSpacing;
-        y: columnOffset + 400;
+        y: columnOffset + 410;
 
         Text {
             width: 225;
@@ -333,7 +327,7 @@ Item{
                 y: 2;
                 width: settings.width-x-settings.sliderInputTextPad
                 value: 1;
-                //onValueChanged: if(socket) socket.sendScale(value*100);
+                onValueChanged: if(socket) socket.sendProjectorSaturation(value*100);
             }
 
             TextInput {
@@ -361,7 +355,7 @@ Item{
             Text { id: curveHeader; y: 60;
                 color: "#ffffff"
                 opacity: curveItem.enabled ? 1.0 : 0.5
-                text: qsTr("Curve")
+                text: qsTr("Curves")
                 font.pixelSize: 12
                 font.family: openSansExtraBold.name;
             }
@@ -400,12 +394,8 @@ Item{
                     curveItem.text = selectedItem;
                     curveItem.visible = true;
                     curveItems.visible = false;
-                    /*if (selectedItem == "grey") {
-                        socket.sendFormat("grey");
-                    }
-                    else if (selectedItem == "red") {
-                        socket.sendFormat("red");
-                    }*/
+                    onValueChanged: if(socket) socket.sendProjectorCurves(selectedItem);
+
                 }
 
                 onExited: {

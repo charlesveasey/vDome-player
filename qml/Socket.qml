@@ -72,95 +72,104 @@ Item {
         }
     }
 
+
+
     /**************************************************************
-     SEND
+     SEND FUNCTIONS
      **************************************************************/
+
     function send(address, msg){
        oscSend.send(address, msg);
     }
 
-    /**************************************************************
-     SEND SOURCE
-     **************************************************************/
+
+    // input
     function sendSource(value){
        send("/input/source/", value);
     }
 
-    /**************************************************************
-     SEND FILE
-     **************************************************************/
     function sendFile(filepath){
         send("/input/file/", filepath);
     }
 
-    /**************************************************************
-     SEND PLAY
-     **************************************************************/
     function sendPlay(){
         send("/input/", "play");
     }
 
-    /**************************************************************
-     SEND PAUSE
-     **************************************************************/
     function sendPause(){
        send("/input/", "stop");
     }
 
-    /**************************************************************
-     SEND SEEK
-     **************************************************************/
     function sendSeek(pos){
        seekValue = pos;
        send("/input/seek/", pos);
     }
 
-    /**************************************************************
-     SEND VOLUME
-     **************************************************************/
     function sendVolume(vol){
        send("/input/volume/", vol);
     }
 
-    /**************************************************************
-     SEND LOOP
-     **************************************************************/
     function sendLoop(value){
        send("/input/loop/", value);
     }
 
-    /**************************************************************
-     SEND FORMAT
-     **************************************************************/
     function sendFormat(value){
        send("/input/format/", value);
     }
 
-    /**************************************************************
-     SEND FLIP
-     **************************************************************/
     function sendFlip(value){
        send("/input/flip/", value);
     }
 
-    /**************************************************************
-     SEND ROTATE
-     **************************************************************/
     function sendRotate(value){
        send("/input/rotate/", value);
     }
 
-    /**************************************************************
-     SEND SCALE
-     **************************************************************/
     function sendScale(value){
        send("/input/scale/", value);
     }
 
-    /**************************************************************
-     SEND TILT
-     **************************************************************/
     function sendTilt(value){
        send("/input/tilt/", value);
     }
+
+
+
+    // projector
+    function sendProjectorIndex(value){
+       send("/projector/index/", value);
+    }
+
+    function sendProjectorEnable(value){
+        send("/projector/enable/", value)
+    }
+
+    function sendProjectorFOV(value){
+        send("/projector/view/fov/", value)
+    }
+
+    function sendProjectorGridX(value){
+        send("/projector/warp/gridx/", value)
+    }
+
+    function sendProjectorGridY(value){
+        send("/projector/warp/gridy/", value)
+    }
+
+    function sendProjectorBrightness(value){
+        send("/projector/blend/brightness/", value)
+    }
+
+    function sendProjectorContrast(value){
+        send("projector/blend/contrast/", value)
+    }
+
+    function sendProjectorSaturation(value){
+        send("projector/color/saturation/", value)
+    }
+
+    function sendProjectorCurves(value){
+        send("projector/color/curves/", value)
+    }
+
 }

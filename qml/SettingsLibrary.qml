@@ -12,10 +12,10 @@ Item {
     property int columnSpacing: 12
     property int column2x: 250
 
-    Column{
-        y: columnOffset
+    Column {
+        y: 0;
         spacing: columnSpacing;
-        width: parent.width
+
 
         Text {
             width: 225;
@@ -25,11 +25,6 @@ Item {
             text: qsTr("Library")
             font.bold : true;
         }
-    }
-
-    Column {
-        y: columnOffset + 45;
-        spacing: columnSpacing;
 
         Text {
             width: 200;
@@ -80,91 +75,48 @@ Item {
 
         }
 
-    }
 
 
-    Column {
-        x: 0
-        y: columnOffset + 100
-       spacing: columnSpacing;
+
+        Text {
+            width: 200;
+            text: qsTr("Clear library")
+            color: '#fff'
+            font.pixelSize: 14
+            font.family: openSansExtraBold.name
+
+            Button {
+                 text: qsTr("Clear")
+                 x: column2x;
+                 y: -3
+
+                 width: 50;
+                 onClicked: {
+                     clearPending = false;
+                     clearWarningDialog.open();
+                }
+             }
+        }
 
 
-       Text {
-           width: 200;
-           text: qsTr("Clear library")
-           color: '#fff'
-           font.pixelSize: 14
-           font.family: openSansExtraBold.name
-
-           Button {
-                text: qsTr("Clear")
-                x: column2x;
-                y: -3
-
-                width: 50;
-                onClicked: {
-                    clearPending = false;
-                    clearWarningDialog.open();
-               }
+        /**************************************************************
+         CLEAR WARNING DIALOG
+         **************************************************************/
+        MessageDialog {
+            id: clearWarningDialog
+            title: "Clear Library"
+            text: "Are you sure you want to clear your library of media and playlists?"
+            standardButtons: StandardButton.Yes | StandardButton.No
+            onYes: {
+                clearPending = true;
+                libraryPanel.clear();
+                playlistIndexPanel.clear();
             }
-       }
-
-
-       /**************************************************************
-        CLEAR WARNING DIALOG
-        **************************************************************/
-       MessageDialog {
-           id: clearWarningDialog
-           title: "Clear Library"
-           text: "Are you sure you want to clear your library of media and playlists?"
-           standardButtons: StandardButton.Yes | StandardButton.No
-           onYes: {
-               clearPending = true;
-               libraryPanel.clear();
-               playlistIndexPanel.clear();
-           }
-           Component.onCompleted: visible = false;
-       }
-
-
-       /*
-       Text {
-           width: 200;
-           text: qsTr("Import library")
-           color: '#fff'
-           font.pixelSize: 14
-           font.family: openSansExtraBold.name
-
-           Button {
-               text: qsTr("Import")
-               x: 250;
-               y: -6
-
-               width: 50;
-              // onClicked:
-           }
-       }
-
-
-
-       Text {
-           width: 200;
-           text: qsTr("Export library")
-           color: '#fff'
-           font.pixelSize: 14
-           font.family: openSansExtraBold.name
-
-           Button {
-               text: qsTr("Export")
-               x: 250;
-               y: -6
-               width: 50;
-               //onClicked:
-           }
-       }
-       */
+            Component.onCompleted: visible = false;
+        }
 
     }
+
 
 
     function clearLibrary(){
