@@ -22,4 +22,3 @@ HEADERS += \
 
 OTHER_FILES +=
 
-CONFIG += static

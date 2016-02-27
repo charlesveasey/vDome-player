@@ -145,31 +145,31 @@ Item {
     }
 
     function sendProjectorFOV(value){
-        send("/projector/view/fov/", value)
+        send("/projector/fov/", value)
     }
 
     function sendProjectorGridX(value){
-        send("/projector/warp/gridx/", value)
+        send("/projector/gridx/", value)
     }
 
     function sendProjectorGridY(value){
-        send("/projector/warp/gridy/", value)
+        send("/projector/gridy/", value)
     }
 
     function sendProjectorBrightness(value){
-        send("/projector/blend/brightness/", value)
+        send("/projector/brightness/", value)
     }
 
     function sendProjectorContrast(value){
-        send("projector/blend/contrast/", value)
+        send("projector/contrast/", value)
     }
 
     function sendProjectorSaturation(value){
-        send("projector/color/saturation/", value)
+        send("projector/saturation/", value)
     }
 
     function sendProjectorCurves(value){
-        send("projector/color/curves/", value)
+        send("projector/curves/", value)
     }
 
 }
