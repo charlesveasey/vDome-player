@@ -43,12 +43,13 @@ Item{
 
             TextInput {
                 id: indexText;
-                x:  settings.sliderInputTextPad-5;
-                y: 2
+                x: settings.sliderInputTextPad-5;
+                y: 1
                 width: 25;
                 color: '#fff'
-                font.pixelSize: 12
+                font.pixelSize: 14
                 font.family: openSansExtraBold.name
+                font.bold : true;
                 text: "1"
                 onAccepted: {
                     socket.sendProjectorIndex(Number(displayText));
@@ -75,339 +76,102 @@ Item{
                 onCheckedChanged: socket.sendProjectorEnable((checked ? "on" : "off"));
             }
         }
-    }
 
 
 
 
-    /**************************************************************
-     VIEW
-     **************************************************************/
-    Column{
-        y: columnOffset + 100;
-        spacing: columnSpacing;
 
-        Text {
-            width: 225;
-            color: '#fff'
-            font.pixelSize: headerSize
-            font.family: openSansExtraBold.name
-            text: qsTr("View")
-            font.bold : true;
-        }
 
         Text {
             width: 225;
             color: '#fff'
             font.pixelSize: 14
             font.family: openSansExtraBold.name
-            text: qsTr("Fov")
+            text: qsTr("Menu")
+            font.bold : false;
 
-            Slider {
-                id: scaleSlider;
+            CheckBox {
+                id: flipCheckbox2
+                width: parent.width;
+                height: 20;
                 x: column2x;
-                y: 2;
-                width: settings.width-x-settings.sliderInputTextPad
-                value: 1
-                onValueChanged: if(socket) socket.sendProjectorFOV(value*2.0);
-            }
-            TextInput {
-                id: scaleText;
-                x: scaleSlider.width + settings.sliderInputTextPad;
-                y: 2
-                width: 25;
-                color: '#fff'
-                font.pixelSize: 12
-                font.family: openSansExtraBold.name
-                text: Math.round(scaleSlider.value * 100)
-                onAccepted: {
-                    scaleSlider.value = Number(displayText) / 2.0;
-                }
-            }
-        }
-    }
-
-
-    /**************************************************************
-     WARP
-     **************************************************************/
-    Column{
-        y: columnOffset + 180;
-        spacing: columnSpacing;
-
-        Text {
-            font.bold : true;
-            y:10;
-            width: 225;
-            color: '#fff'
-            font.pixelSize: headerSize
-            font.family: openSansExtraBold.name
-            text: qsTr("Warp")
-        }
-
-        Text {
-            width: 150;
-            color: '#fff'
-            font.pixelSize: 14
-            font.family: openSansExtraBold.name
-            text: qsTr("Grid X")
-
-            Slider {
-                id: gridXSlider;
-                x: column2x;
-                y: 2;
-                width: settings.width-x-settings.sliderInputTextPad
-                value: 1
-                onValueChanged: if(socket) socket.sendProjectorGridX( Math.round( map(gridXSlider.value, 0, 1, 1, 10) ) );
-            }
-
-            TextInput {
-                id: gridXText;
-                x: gridXSlider.width + settings.sliderInputTextPad;
-                y: 2
-                width: 25;
-                color: '#fff'
-                font.pixelSize: 12
-                font.family: openSansExtraBold.name
-                text: Math.round( map(gridXSlider.value, 0, 1, 1, 10) );
-                onAccepted: {
-                    gridXSlider.value = map (Number(displayText), 1, 10, 0, 1);
-                }
+                y: 1
+                checked: true
+                onCheckedChanged: socket.sendProjectorEnable((checked ? "on" : "off"));
             }
         }
 
-        Text {
-            width: 150;
-            color: '#fff'
-            font.pixelSize: 14
-            font.family: openSansExtraBold.name
-            text: qsTr("Grid Y")
 
-            Slider {
-                id: gridYSlider;
-                x: column2x;
-                y: 2;
-                width: settings.width-x-settings.sliderInputTextPad
-                value: 1
-                onValueChanged: if(socket) socket.sendProjectorGridY( Math.round( map(gridYSlider.value, 0, 1, 1, 10) ) );
-            }
-
-            TextInput {
-                id: gridYText;
-                x: gridYSlider.width + settings.sliderInputTextPad;
-                y: 2
-                width: 25;
-                color: '#fff'
-                font.pixelSize: 12
-                font.family: openSansExtraBold.name
-                text: Math.round( map(gridYSlider.value, 0, 1, 1, 10) );
-                onAccepted: {
-                    gridYSlider.value = map (Number(displayText), 1, 10, 0, 1);
-                }
-            }
-       }
-
-    }
-
-
-
-
-    /**************************************************************
-     BLEND
-     **************************************************************/
-    Column{
-        y: columnOffset + 290;
-        spacing: columnSpacing;
-
-        Text {
-            font.bold : true;
-            width: 225;
-            color: '#fff'
-            font.pixelSize: headerSize
-            font.family: openSansExtraBold.name
-            text: qsTr("Blend")
-        }
 
         Text {
             width: 225;
             color: '#fff'
             font.pixelSize: 14
             font.family: openSansExtraBold.name
-            text: qsTr("Brightness")
+            text: qsTr("Azimuth")
 
             Slider {
-                id: brightnessSlider;
-                 x: column2x;
-                y: 2;
-                width: settings.width-x-settings.sliderInputTextPad
-                value: 1
-                onValueChanged: if(socket) socket.sendProjectorBrightness(value * 100);
-            }
-
-            TextInput {
-                id: brightnessText;
-                x: brightnessSlider.width + settings.sliderInputTextPad;
-                y: 2
-                width: 25;
-                color: '#fff'
-                font.pixelSize: 12
-                font.family: openSansExtraBold.name
-                text: Math.round(brightnessSlider.value * 100)
-                onAccepted: {
-                    brightnessSlider.value = Number(displayText) * 100
-                }
-            }
-        }
-
-        Text {
-            width: 150;
-            color: '#fff'
-            font.pixelSize: 14
-            font.family: openSansExtraBold.name
-            text: qsTr("Contrast")
-
-            Slider {
-                id: contrastSlider;
-                 x: column2x;
-                y: 2;
-                width: settings.width-x-settings.sliderInputTextPad
-                value: 1
-                onValueChanged: if(socket) socket.sendProjectorContrast(value * 100); //fix
-            }
-
-            TextInput {
-                id: contrastText;
-                x: contrastSlider.width + settings.sliderInputTextPad;
-                y: 2
-                width: 25;
-                color: '#fff'
-                font.pixelSize: 12
-                font.family: openSansExtraBold.name
-                text: Math.round(contrastSlider.value * 100);
-                onAccepted: {
-                    contrastSlider.value = (Number(displayText) * 100);
-                }
-            }
-        }
-
-    }
-
-
-
-
-
-
-    /**************************************************************
-     COLOR
-     **************************************************************/
-
-    Column{
-        spacing: columnSpacing;
-        y: columnOffset + 410;
-
-        Text {
-            width: 225;
-            color: '#fff'
-            font.pixelSize: headerSize
-            font.family: openSansExtraBold.name
-            text: qsTr("Color")
-            font.bold : true;
-
-        }
-        Text {
-            width: 225;
-            color: '#fff'
-            font.pixelSize: 14
-            font.family: openSansExtraBold.name
-            text: qsTr("Saturation")
-
-            Slider {
-                id: saturationSlider;
+                id: polarAzimuthSlider;
                  x: column2x;
                 y: 2;
                 width: settings.width-x-settings.sliderInputTextPad
                 value: 1;
-                onValueChanged: if(socket) socket.sendProjectorSaturation(value*100);
+                onValueChanged: if(socket) socket.sendProjectorPolar(polarAzimuthSlider.value*100 + "," + polarElevationSlider.value*100);
             }
 
             TextInput {
-                id: saturationInput;
-                x: saturationSlider.width + settings.sliderInputTextPad;
+                id: polarAzimuthInput;
+                x: polarAzimuthSlider.width + settings.sliderInputTextPad;
                 y: 2
                 width: 25;
                 color: '#fff'
                 font.pixelSize: 12
                 font.family: openSansExtraBold.name
-                text: Math.round(saturationSlider.value * 100)
+                text: Math.round(polarAzimuthSlider.value * 100)
                 onAccepted: {
-                    saturationSlider.value = (Number(displayText) * 100)
+                    polarAzimuthSlider.value = (Number(displayText) * 100)
                 }
             }
         }
 
 
 
-        /**************************************************************
-         CURVE
-         **************************************************************/
-        Item{
+        Text {
+            width: 225;
+            color: '#fff'
+            font.pixelSize: 14
+            font.family: openSansExtraBold.name
+            text: qsTr("Elevation")
 
-            Text { id: curveHeader; y: 60;
-                color: "#ffffff"
-                opacity: curveItem.enabled ? 1.0 : 0.5
-                text: qsTr("Curves")
+            Slider {
+                id: polarElevationSlider;
+                x: column2x;
+                y: 2;
+                width: settings.width-x-settings.sliderInputTextPad
+                value: 1;
+                onValueChanged: if(socket) socket.sendProjectorPolar(polarAzimuthSlider.value*100 + "," + polarElevationSlider.value*100);
+            }
+
+            TextInput {
+                id: polarElevationInput;
+                x: polarElevationSlider.width + settings.sliderInputTextPad;
+                y: 2
+                width: 25;
+                color: '#fff'
                 font.pixelSize: 12
-                font.family: openSansExtraBold.name;
-            }
-
-            TextButton {
-                id: curveItem; x:column2x; y: curveHeader.y;
-                color: "#ffffff"
-                opacity: enabled ? 1.0 : 0.5
-                text: qsTr("grey")
-                hit.width: 90; hit.height: 25; hit.x: 0; hit.y: 0;
-                onClicked: {
-                    curveItem.visible = false;
-                    curveItems.visible = true;
+                font.family: openSansExtraBold.name
+                text: Math.round(polarElevationSlider.value * 100)
+                onAccepted: {
+                    polarElevationSlider.value = (Number(displayText) * 100)
                 }
             }
-
-            SelectionPanel {
-                id: curveItems; x:column2x-25; y:30;
-                visible: false
-                width: 100
-                height: 125
-                itemHeight: 20
-
-                Component.onCompleted: {
-                    model.append({ name: 'grey'});
-                    model.append({ name: 'red' });
-                    model.append({ name: 'green' });
-                    model.append({ name: 'blue' });
-                    selectedItem = 'grey';
-                }
-
-                onSelectionPopup: {
-                    //root.selectionPopup();
-                }
-                onClicked: {
-                    curveItem.text = selectedItem;
-                    curveItem.visible = true;
-                    curveItems.visible = false;
-                    onValueChanged: if(socket) socket.sendProjectorCurves(selectedItem);
-
-                }
-
-                onExited: {
-                    curveItem.visible = true;
-                }
-            }
-
-
         }
+
 
 
     }
+
+
 
 
 

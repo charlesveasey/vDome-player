@@ -116,60 +116,45 @@ Item {
     function sendFormat(value){
        send("/input/format/", value);
     }
-
     function sendFlip(value){
        send("/input/flip/", value);
     }
-
     function sendRotate(value){
        send("/input/rotate/", value);
     }
-
     function sendScale(value){
        send("/input/scale/", value);
     }
-
     function sendTilt(value){
        send("/input/tilt/", value);
     }
-
-
 
     // projector
     function sendProjectorIndex(value){
        send("/projector/index/", value);
     }
-
     function sendProjectorEnable(value){
         send("/projector/enable/", value)
     }
-
     function sendProjectorFOV(value){
         send("/projector/fov/", value)
     }
-
     function sendProjectorGridX(value){
         send("/projector/gridx/", value)
     }
-
     function sendProjectorGridY(value){
         send("/projector/gridy/", value)
     }
-
     function sendProjectorBrightness(value){
         send("/projector/brightness/", value)
     }
-
     function sendProjectorContrast(value){
-        send("projector/contrast/", value)
+        send("/projector/contrast/", value)
     }
-
     function sendProjectorSaturation(value){
-        send("projector/saturation/", value)
+        send("/projector/saturation/", value)
     }
-
-    function sendProjectorCurves(value){
-        send("projector/curves/", value)
+    function sendProjectorPolar(value){
+        send("/projector/polar/", value)
     }
-
 }

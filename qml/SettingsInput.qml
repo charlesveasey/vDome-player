@@ -49,24 +49,11 @@ Item{
             }
         }
 
-    }
 
 
 
 
-    Column{
-        y:columnOffset + 75
-        spacing: columnSpacing;
-        width: parent.width
 
-        Text {
-            width: 225;
-            color: '#fff'
-            font.pixelSize: 16
-            font.family: openSansExtraBold.name
-            text: qsTr("Transform")
-            font.bold : true;
-        }
 
         Text {
             width: 225;
@@ -161,7 +148,12 @@ Item{
             }
 
         }
+
+
+
+
     }
+
 
 
 
