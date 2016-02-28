@@ -11,24 +11,33 @@ Window {
     title: "Settings"
     width: window.width/2; height: window.height
     minimumWidth: 400; minimumHeight: 265;
-    color: '#111'
-    opacity: 1
-    property int  sliderInputTextPad: 100
+    color: '#111'; opacity: 1
     flags: Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowSystemMenuHint
+
+    property int  sliderInputTextPad: 100
     property var settingsObject;
+
+    property int fontSizeHeader: 18;
+    property int fontSizeNormal: 16;
+    property int columnSpacing: 16;
+
+    property string fontRegular: openSansSemiBold.name;
+    property string fontBold: openSansExtraBold.name;
+
 
     Component.onCompleted: {
         db.createSettings();
         load();
     }
 
+
     Component.onDestruction: {
         cancel();
     }
 
+
     Row{
-        x: 20;
-        y: 15;
+        x: 20; y: 15;
         spacing: 30
 
         /**************************************************************
@@ -122,46 +131,33 @@ Window {
      SETTINGS TAB CONTAINERS
      **************************************************************/
     Rectangle{
-        x: 0;
-        y: 55;
-        width: parent.width;
-        height: parent.height-y*2;
+        x: 0;  y: 55; width: parent.width; height: parent.height-y*2;
         color: '#212121'
 
         SettingsInput{
              id: settingsInput;
              visible: settingsInputTab.checked;
-             x: 20;
-             y: 20;
-             z: 5;
+             x: 20; y: 20; z: 5;
         }
         SettingsProjector{
             id: settingsProjector;
             visible: settingsProjectorTab.checked;
-            x: 20;
-            y: 20;
-            z: 5;
+            x: 20; y: 20; z: 5;
         }
         SettingsWindow{
             id: settingsWindow;
             visible: settingsWindowTab.checked;
-            x: 20;
-            y: 20;
-            z: 5;
+            x: 20; y: 20;  z: 5;
         }
         SettingsLibrary{
              id: settingsLibrary;
              visible: settingsLibraryTab.checked;
-             x: 20;
-             y: 20;
-             z: 5;
+             x: 20; y: 20; z: 5;
         }
         SettingsSocket{
             id: settingsSocket;
             visible: settingsSocketTab.checked;
-            x: 20;
-            y: 20;
-            z: 5;
+            x: 20; y: 20; z: 5;
         }
     }
 

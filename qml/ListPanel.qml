@@ -208,7 +208,7 @@ Item {
                                                       parent.width;
                         text: title == null || title == "" ? "----" : title;
                         font.pixelSize: 12
-                        font.family: openSansSemibold.name;
+                        font.family: openSansSemiBold.name;
                         z: 0
                         activeFocusOnPress: false
                         cursorVisible: false
@@ -251,7 +251,7 @@ Item {
                         color: "white";
                         text: author == null || author == "" ? "----" : author;
                         font.pixelSize: 12
-                        font.family: openSansSemibold.name;
+                        font.family: openSansSemiBold.name;
                         font.bold: false;
                         z: 0
                         clip: true;
@@ -287,7 +287,7 @@ Item {
                         x: durationHeader.x-14; y:4.5; color: "white";
                         text: secondsToHms(duration);
                         font.pixelSize: 12
-                        font.family: openSansSemibold.name;
+                        font.family: openSansSemiBold.name;
                         font.bold: false;
                         clip: true;
                         activeFocusOnPress: false

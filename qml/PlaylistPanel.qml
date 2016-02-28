@@ -47,7 +47,7 @@ Item {
         color: "#ffffff";
         text: qsTr("")
         font.pixelSize: 17
-        font.family: openSansSemibold.name;
+        font.family: openSansSemiBold.name;
         font.bold: true;
         z: 0
         activeFocusOnPress: false
@@ -96,7 +96,7 @@ Item {
         color: "#ffffff";
         text: secondsToHms(cSum);
         font.pixelSize: 15
-        font.family: openSansSemibold.name;
+        font.family: openSansSemiBold.name;
         font.bold: true;
         z: 0
         clip: true;

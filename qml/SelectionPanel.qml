@@ -96,7 +96,7 @@ Item {
                 Text {
                     color: "#ffffff"
                     font.pixelSize: 13
-                    font.family: openSansSemibold.name
+                    font.family: openSansSemiBold.name
                     font.bold: true;
                     text: name ; anchors.centerIn: parent}
             }

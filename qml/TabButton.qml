@@ -30,7 +30,7 @@ Item {
         color: "#ffffff"
         text: text
         font.pixelSize: checked ? 18 : 17;
-        font.family: checked ? openSansExtraBold.name : openSansSemibold.name;
+        font.family: checked ? openSansExtraBold.name : openSansSemiBold.name;
 
         ColorOverlay {
             id: glowEffect

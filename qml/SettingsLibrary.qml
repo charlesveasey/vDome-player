@@ -8,71 +8,52 @@ import QtQuick.Dialogs 1.1
 Item {
     property real imageDuration: 10
     property bool clearPending: false
-    property int columnOffset: 10
-    property int columnSpacing: 12
     property int column2x: 250
 
     Column {
-        y: 0;
+        x:0; y: 0;
         spacing: columnSpacing;
 
 
         Text {
             width: 225;
-            color: '#fff'
-            font.pixelSize: 16
-            font.family: openSansExtraBold.name
+            color: '#fff'; font.pixelSize: fontSizeHeader; font.family: fontBold;
             text: qsTr("Library")
-            font.bold : true;
         }
 
         Text {
             width: 200;
+            color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular;
             text: qsTr("Image Duration")
-            color: '#fff'
-            font.pixelSize: 14
-            font.family: openSansExtraBold.name
-
-
 
             TextInput{
                 id:durationText
                 x: column2x;
-                color: '#fff'
+                color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular;
+                clip: true; activeFocusOnPress: true;  readOnly: false; selectByMouse: true;
+                enabled: false; visible: enabled;
                 text: secondsToHms(imageDuration);
-                font.pixelSize: 14
-                font.family: openSansExtraBold.name
-                clip: true;
-                activeFocusOnPress: true
-                readOnly: false;
-                selectByMouse: true;
-                enabled: false;
-                visible: enabled;
                 onAccepted: {
                     imageDuration = hmsToSeconds(displayText);
                     enabled = false;
                     libraryPanel.updateDurationTmp(imageDuration);
                 }
             }
+
             Text {
-                width: 200;
-                color: '#fff'
-                font.pixelSize: 14
-                font.family: openSansExtraBold.name
-                text: secondsToHms(imageDuration);
-                x: column2x;
+                x: column2x; width: 200;
+                color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular;
                 visible: !durationText.enabled;
+                text: secondsToHms(imageDuration);
 
                 MouseArea{
-                    width: parent.width;
-                    height: parent.height;
+                    width: parent.width; height: parent.height;
                     onPressed: {
                         durationText.enabled = true;
                         durationText.forceActiveFocus();
                     }
                 }
             }
-
         }
 
 
@@ -80,17 +61,12 @@ Item {
 
         Text {
             width: 200;
-            text: qsTr("Clear library")
-            color: '#fff'
-            font.pixelSize: 14
-            font.family: openSansExtraBold.name
+            color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular;
+            text: qsTr("Clear library");
 
             Button {
-                 text: qsTr("Clear")
-                 x: column2x;
-                 y: -3
-
-                 width: 50;
+                 x: column2x; y: -3; width: 50;
+                 text: qsTr("Clear");
                  onClicked: {
                      clearPending = false;
                      clearWarningDialog.open();
@@ -99,9 +75,8 @@ Item {
         }
 
 
-        /**************************************************************
-         CLEAR WARNING DIALOG
-         **************************************************************/
+
+
         MessageDialog {
             id: clearWarningDialog
             title: "Clear Library"
@@ -115,21 +90,25 @@ Item {
             Component.onCompleted: visible = false;
         }
 
-    }
 
 
 
-    function clearLibrary(){
-        libraryPanel.clear();
-        playlistIndexPanel.clear();
-        db.dropLibrary()
-        db.dropPlaylist();
-        db.dropPlaylistIndex();
-        db.createLibrary();
-        db.createPlaylist();
-        db.createPlaylistIndex();
-        clearPending = false;
-    }
+    } // column
+
+
+
+ // clear library database and list models
+function clearLibrary(){
+    libraryPanel.clear();
+    playlistIndexPanel.clear();
+    db.dropLibrary()
+    db.dropPlaylist();
+    db.dropPlaylistIndex();
+    db.createLibrary();
+    db.createPlaylist();
+    db.createPlaylistIndex();
+    clearPending = false;
+}
 
 
 }

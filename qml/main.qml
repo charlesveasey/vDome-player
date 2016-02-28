@@ -9,17 +9,13 @@ import Syscmds 1.0
  WINDOW
  **************************************************************/
 ApplicationWindow {
-    property int defaultW: 1200
-    property int defaultH: 700
-    property int minW: 1000
-    property int minH: 100
+    property int defaultW: 1200; property int defaultH: 700
+    property int minW: 1000;  property int minH: 100
 
     id: window
-    visible: true
-    width: 1200
-    height: 700
-    minimumWidth: minW;
-    minimumHeight: minH;
+    width: 1200; height: 700;
+    minimumWidth: minW; minimumHeight: minH;
+    visible: true;
     title: ""
     //flags: Qt.WindowActive
     //flags: Qt.FramelessWindowHint
@@ -48,7 +44,7 @@ ApplicationWindow {
     FontLoader { id: openSansRegular; source: "../fonts/OpenSans-Regular.ttf" }
     FontLoader { id: openSansItalic; source: "../fonts/OpenSans-Italic.ttf" }
     FontLoader { id: openSansExtraBold; source: "../fonts/OpenSans-ExtraBold.ttf" }
-    FontLoader { id: openSansSemibold; source: "../fonts/OpenSans-Semibold.ttf" }
+    FontLoader { id: openSansSemiBold; source: "../fonts/OpenSans-Semibold.ttf" }
 
     /**************************************************************
      SOCKET
@@ -86,8 +82,7 @@ ApplicationWindow {
      **************************************************************/
     Rectangle {
         color:"black"
-        width:parent.width
-        height:parent.height
+        width:parent.width; height:parent.height;
     }
 
     /**************************************************************
@@ -171,8 +166,7 @@ ApplicationWindow {
      **************************************************************/
     MouseArea {
         id: globalMouseArea
-        width:parent.width;
-        height: parent.height;
+        width:parent.width; height: parent.height;
         enabled: false;
         //z: 100;
         onPressed: {
