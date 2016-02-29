@@ -7,11 +7,13 @@ import QtQuick.Dialogs 1.1
  WINDOW SETTINGS
  **************************************************************/
 Item {
-    property int column2x: 250
+
+    property int column2x: 300;
+    property int column3x: column2x+50;
 
 
 
-
+    // tab header
     Text {
         width: 225;
         color: '#fff'; font.pixelSize: fontSizeHeader; font.family: fontBold; font.bold: true;
@@ -19,6 +21,7 @@ Item {
     }
 
 
+    // add remove buttons
     Button {
          text: qsTr("Add")
          x: 0; y: 45; width: 65;
@@ -48,15 +51,16 @@ Item {
 
 
 
-
-
-
+    // list view component
     Component {
         id: aDelegate
 
         Column {
+
+            height: 205;
             spacing: columnSpacing;
 
+            // window index
             Text {
                 width: 225;
                 color: '#fff'; font.pixelSize: fontSizeHeader; font.family: fontBold; font.bold: true;
@@ -64,22 +68,81 @@ Item {
             }
 
 
+            // window border
+            Text {
+                width: 225;
+                color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
+                text: qsTr("Window Border")
+
+
+                // window border switch
+                Switch {
+                    x: column2x;
+                    checked: false;
+                    onCheckedChanged: {
+                        if (socket) {
+                            //////////////////////////////////////////////////////////////
+                           // socket.sendProjectorMenu((checked ? "on" : "off"));
+                         }
+                    }
+                }
+            }
+
+
+
+
+            // window position
+            Text {
+                width: 400;
+                color: '#fff'
+                font.pixelSize: fontSizeNormal
+                font.family: fontRegular
+                text: qsTr("Window Position (x,y) ")
+
+
+                // x
+                TextInput{
+                    x: column2x; width: 50;
+                    color: '#fff';  font.pixelSize: fontSizeNormal; font.family: fontRegular; horizontalAlignment:  Text.AlignLeft;
+                    clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
+                    enabled: true; visible: true;
+                    text: "0";
+                    //////////////////////////////////
+                   // onAccepted: projectorCount = displayText;
+                }
+
+                // y
+                TextInput{
+                    x: column3x; y: 0; width: 50;
+                    color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
+                    clip: true; activeFocusOnPress: true; readOnly: false;  selectByMouse: true;
+                    enabled: true; visible: true;
+                    text: "0";
+                    //////////////////////////////////
+                   // onAccepted: projectorCount = displayText;
+                }
+            }
+
+
+
+
+            // projector count
             Text {
                 width: 225;
                 color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                 text: qsTr("Projector Count ")
 
 
+                // input projector count
                 TextInput{
-                    id:pText
-                    x: 255;  width: 35
+                    x: column2x;  width: 50;
                     color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                     clip: true;  activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
                     text: projectorCount;
                     onAccepted: {
-                        enabled = false;
-                        projectorCount = displayText;
+                        //////////////////////////////////
+                       // onAccepted: projectorCount = displayText;
                     }
                 }
 
@@ -88,7 +151,7 @@ Item {
 
 
 
-
+            // projector resolution
             Text {
                 width: 225;
                 color: '#fff'
@@ -96,81 +159,35 @@ Item {
                 font.family: fontRegular
                 text: qsTr("Projector Resolution (w,h)")
 
+                // width
                 TextInput{
-                    id:bText
-                    x: column2x; width: 35
-                    color: '#fff';  font.pixelSize: fontSizeNormal; font.family: fontRegular; horizontalAlignment:  Text.AlignRight;
+                    x: column2x; y: 0; width: 50;
+                    color: '#fff';  font.pixelSize: fontSizeNormal; font.family: fontRegular; horizontalAlignment:  Text.AlignLeft;
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true;  visible: true;
                     text: "1024";
-                    onAccepted: projectorCount = displayText;
+                    //////////////////////////////////
+                   // onAccepted: projectorCount = displayText;
                }
 
-                Text {
-                    x: column2x+35; width: 50;
-                    color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
-                    text: qsTr(" , ")
-                }
-
-
+                // height
                 TextInput{
-                    id:cText
-                    x: column2x+50;  width:225
+                    x: column3x; y: 0; width: 50;
                     color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
                     text: "768";
-                    onAccepted: projectorCount = displayText;
+                    //////////////////////////////////
+                   // onAccepted: projectorCount = displayText;
                 }
 
             }
 
-
-
-
-
-            Text {
-                width: 225;
-                color: '#fff'
-                font.pixelSize: fontSizeNormal
-                font.family: fontRegular
-                text: qsTr("Window Position (x,y) ")
-                height: 50
-
-                TextInput{
-                    id:hostText
-                    x: column2x; width: 35
-                    color: '#fff';  font.pixelSize: fontSizeNormal; font.family: fontRegular; horizontalAlignment:  Text.AlignRight;
-                    clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
-                    enabled: true; visible: true;
-                    text: "0";
-
-                    onAccepted: {
-                        projectorCount = displayText;
-                    }
-                }
-
-                Text {
-                    x: column2x+35;
-                    width: 35;
-                    color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
-                    text: qsTr(" , ")
-                }
-
-
-                TextInput{
-                    id:nText
-                    x: column2x+50; width:35;
-                    color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
-                    clip: true; activeFocusOnPress: true; readOnly: false;  selectByMouse: true;
-                    enabled: true; visible: true;
-                    text: "0";
-                    onAccepted: projectorCount = displayText;
-                }
-            }
 
 
          } // column
+
+
 
 
     } // component
@@ -182,7 +199,7 @@ Item {
         id: amodel
         ListElement {
             index: 1
-            projectorCount: 3
+            projectorCount: 1
         }
     }
 
@@ -190,7 +207,7 @@ Item {
 
      ListView {
          id: settingsWindowList;
-         y:100; width: 400; height: settings.height
+         y:100; width: 700; height: settings.height
          model: amodel
          delegate: aDelegate
      }
