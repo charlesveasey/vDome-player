@@ -70,5 +70,7 @@
         <file>qml/SettingsInput.qml</file>
         <file>qml/SettingsProjector.qml</file>
         <file>qml/SettingsWindow.qml</file>
+        <file>qml/CalibrationInfo.qml</file>
+        <file>qml/CalibrationKeys.qml</file>
     </qresource>
 </RCC>

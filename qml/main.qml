@@ -38,6 +38,12 @@ ApplicationWindow {
     menuBar: sysmenu
     SystemMenu{ id:sysmenu }
 
+
+    CalibrationInfo{
+        id:calibrationInfo;
+    }
+
+
     /**************************************************************
      FONTS
      **************************************************************/
