@@ -2,10 +2,12 @@ TEMPLATE = app
 
 QT += qml quick
 QT += multimedia
+QT += xml
 
 SOURCES += main.cpp \
     playlist.cpp \
-    syscmds.cpp
+    syscmds.cpp \
+    xmlParser.cpp
 
 RESOURCES += qml.qrc
 
@@ -18,7 +20,8 @@ include(osc/osc.pri)
 
 HEADERS += \
     playlist.h \
-    syscmds.h
+    syscmds.h \
+    xmlParser.h
 
 OTHER_FILES +=
 

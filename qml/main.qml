@@ -4,6 +4,7 @@ import QtQuick.Dialogs 1.0
 import QtQuick.Controls 1.2
 import Playlist 1.0
 import Syscmds 1.0
+import XMLParser 1.0
 
 /**************************************************************
  WINDOW
@@ -25,12 +26,92 @@ ApplicationWindow {
         divider.x = nMap(divider.cachedX, 0, divider.cachedW, 0, width)
     }
 
+
     /**************************************************************
      SYSTEM SETTINGS
      **************************************************************/
     Settings {
         id: settings;
     }
+
+
+    /**************************************************************
+     SYSTEM SETTINGS
+     **************************************************************/
+    XMLParser {
+        id: xml;
+        function loadSettings() {
+            var xmlData = xml.load();
+            var pCount = 0;
+            var windowFlag = false;
+
+            var wIndex =0;
+            var wBorder, wPosition, wPositionX, wPositionY;
+            var pResolution, pResolutionX, pResolutionY;
+            var s = [];
+
+            for (var i= 0; i<xmlData.length; i++){
+
+                if (xmlData[i] === "window"){       // window
+
+                    if (windowFlag){
+                        settings.windowSettings.model.append({
+                                 "index":           wIndex,
+                                 "border":          wBorder,
+                                 "positionX":       wPositionX,
+                                 "positionY":       wPositionY,
+                                 "count":           pCount,
+                                 "resolutionX":     pResolutionX,
+                                 "resolutionY":     pResolutionY
+                                 });
+                    }
+
+                    // index
+                    wIndex = (parseInt(xmlData[i+1]));
+
+                    // border
+                    wBorder = (xmlData[i+3] === "on") ? true : false;
+
+                    // position
+                    wPosition = xmlData[i+5];
+                    s = wPosition.split(",");
+                    wPositionX = parseInt(s[0]);
+                    wPositionY = parseInt(s[1]);
+
+                    // resolution
+                    pResolution = xmlData[i+9];
+                    s = pResolution.split(",");
+                    pResolutionX = parseInt(s[0]);
+                    pResolutionY = parseInt(s[1]);
+
+                    // reset projector count
+                    pCount = 0;
+
+                    // set window flag
+                    windowFlag = true;
+                }
+                if (xmlData[i] === "projector"){
+                    pCount++;
+                }
+
+            }
+
+
+            settings.windowSettings.model.append({
+                     "index":           wIndex,
+                     "border":          wBorder,
+                     "positionX":       wPositionX,
+                     "positionY":       wPositionY,
+                     "count":           pCount,
+                     "resolutionX":     pResolutionX,
+                     "resolutionY":     pResolutionY
+                     });
+        }
+
+
+    }
+
+
 
     /**************************************************************
      SYSTEM MENU

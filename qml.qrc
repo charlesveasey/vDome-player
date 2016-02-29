@@ -72,5 +72,7 @@
         <file>qml/SettingsWindow.qml</file>
         <file>qml/CalibrationInfo.qml</file>
         <file>qml/CalibrationKeys.qml</file>
+        <file>xmlParser.cpp</file>
+        <file>xmlParser.h</file>
     </qresource>
 </RCC>

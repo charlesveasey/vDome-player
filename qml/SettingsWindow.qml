@@ -8,10 +8,11 @@ import QtQuick.Dialogs 1.1
  **************************************************************/
 Item {
 
+    id: windowSettings;
     property int column2x: 300;
     property int column3x: column2x+50;
-
-
+    property var model: model;
+    property var projectorCount: 0;
 
     // tab header
     Text {
@@ -27,9 +28,15 @@ Item {
          x: 0; y: 45; width: 65;
 
          onClicked: {
-                 amodel.append({
-                    "index":    settingsWindowList.count+1,
-                    "projectorCount":    2
+                 model.append({
+                    "index":         list.count+1,
+                    "border":        false,
+                    "positionX":     0,
+                    "positionY":     0,
+                    "count":         1,
+                    "resolutionX":   1024,
+                    "resolutionY":   768
+
                  })
         }
 
@@ -38,8 +45,8 @@ Item {
               x: parent.width+10; y: 0;  width: 65;
 
               onClicked: {
-                  if (settingsWindowList.count > 1){
-                     amodel.remove( settingsWindowList.count-1, 1 );
+                  if (list.count > 1){
+                     model.remove( list.count-1, 1 );
                   }
              }
          }
@@ -53,7 +60,8 @@ Item {
 
     // list view component
     Component {
-        id: aDelegate
+        id: delgate
+
 
         Column {
 
@@ -78,7 +86,7 @@ Item {
                 // window border switch
                 Switch {
                     x: column2x;
-                    checked: false;
+                    checked: border;
                     onCheckedChanged: {
                         if (socket) {
                             //////////////////////////////////////////////////////////////
@@ -106,7 +114,7 @@ Item {
                     color: '#fff';  font.pixelSize: fontSizeNormal; font.family: fontRegular; horizontalAlignment:  Text.AlignLeft;
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
-                    text: "0";
+                    text: positionX;
                     //////////////////////////////////
                    // onAccepted: projectorCount = displayText;
                 }
@@ -117,7 +125,7 @@ Item {
                     color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                     clip: true; activeFocusOnPress: true; readOnly: false;  selectByMouse: true;
                     enabled: true; visible: true;
-                    text: "0";
+                    text: positionY;
                     //////////////////////////////////
                    // onAccepted: projectorCount = displayText;
                 }
@@ -139,7 +147,7 @@ Item {
                     color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                     clip: true;  activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
-                    text: projectorCount;
+                    text: count;
                     onAccepted: {
                         //////////////////////////////////
                        // onAccepted: projectorCount = displayText;
@@ -165,7 +173,7 @@ Item {
                     color: '#fff';  font.pixelSize: fontSizeNormal; font.family: fontRegular; horizontalAlignment:  Text.AlignLeft;
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true;  visible: true;
-                    text: "1024";
+                    text: resolutionX;
                     //////////////////////////////////
                    // onAccepted: projectorCount = displayText;
                }
@@ -176,7 +184,7 @@ Item {
                     color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
-                    text: "768";
+                    text: resolutionY;
                     //////////////////////////////////
                    // onAccepted: projectorCount = displayText;
                 }
@@ -196,21 +204,22 @@ Item {
 
 
     ListModel {
-        id: amodel
-        ListElement {
-            index: 1
-            projectorCount: 1
-        }
+        id: model
     }
 
 
 
      ListView {
-         id: settingsWindowList;
+         id: list;
          y:100; width: 700; height: settings.height
-         model: amodel
-         delegate: aDelegate
+         model: model
+         delegate: delgate
+
+          Component.onCompleted: {
+              xml.loadSettings();
+          }
      }
+
 
 
 

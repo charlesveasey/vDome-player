@@ -24,6 +24,7 @@ Window {
     property string fontRegular: openSansSemiBold.name;
     property string fontBold: openSansExtraBold.name;
 
+    property var windowSettings: settingsWindow;
 
     Component.onCompleted: {
         db.createSettings();
