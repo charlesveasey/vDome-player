@@ -17,7 +17,7 @@ Item{
 
         Text {
             width: 225;
-            color: '#fff'; font.pixelSize: fontSizeHeader; font.family: fontBold;
+            color: '#fff'; font.pixelSize: fontSizeHeader; font.family: fontBold; font.bold: true;
             text: qsTr("Socket")
         }
 

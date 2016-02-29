@@ -130,31 +130,20 @@ Item {
     }
 
     // projector
-    function sendProjectorIndex(value){
-       send("/projector/index/", value);
+    function sendProjectorMenu(value){
+        send("/projector/menu/", value)
     }
     function sendProjectorEnable(value){
         send("/projector/enable/", value)
     }
-    function sendProjectorFOV(value){
-        send("/projector/fov/", value)
-    }
-    function sendProjectorGridX(value){
-        send("/projector/gridx/", value)
-    }
-    function sendProjectorGridY(value){
-        send("/projector/gridy/", value)
-    }
-    function sendProjectorBrightness(value){
-        send("/projector/brightness/", value)
-    }
-    function sendProjectorContrast(value){
-        send("/projector/contrast/", value)
-    }
-    function sendProjectorSaturation(value){
-        send("/projector/saturation/", value)
-    }
     function sendProjectorPolar(value){
         send("/projector/polar/", value)
     }
+
+    // focus
+    function sendAppFocus(value){
+        send("/projector/focus/", value)
+    }
+
+
 }

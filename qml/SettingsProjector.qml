@@ -17,16 +17,11 @@ Item{
 
 
 
-
-
-
         Text {
             width: 225;
-            color: '#fff'; font.pixelSize: fontSizeHeader; font.family: fontBold;
+            color: '#fff'; font.pixelSize: fontSizeHeader; font.family: fontBold; font.bold: true;
             text: qsTr("Projector")
         }
-
-
 
 
 
@@ -38,12 +33,13 @@ Item{
             Switch {
                 x: column2x;
                 checked: false;
-                onCheckedChanged: if (socket) socket.sendProjectorEnable((checked ? "on" : "off"));
+                onCheckedChanged: {
+                    if (socket) {
+                        socket.sendProjectorMenu((checked ? "on" : "off"));
+                     }
+                }
             }
         }
-
-
-
 
 
     } // column 1
@@ -57,25 +53,22 @@ Item{
 
         Text {
             width: 225;
-            color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold;
+            color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold; font.bold: true;
             text: qsTr("Projector Index")
-
-
         }
 
 
 
         Slider {
             id: projectorSlider;
-            x: 0; y: 2; width: settings.width-x-settings.sliderInputTextPad
-            value: 1; maximumValue: 4.0; stepSize: 1;
-            //onValueChanged: if (socket) socket.sendProjectorPolar(polarAzimuthSlider.value*100 + "," + polarElevationSlider.value*100);
+            x: 0; y: 0; width: settings.width-x-settings.sliderInputTextPad
+            value: 0; maximumValue: 5.0; stepSize: 1;
             TextInput {
                 id: projectorInput;
-                x: parent.width+25; y: 2; width: 25;
+                x: parent.width+25; y: -2; width: 25;
                 color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular;
-                text: projectorSlider.value;
-                onAccepted: projectorSlider.value = Number(displayText);
+                text: projectorSlider.value + 1;
+                onAccepted: projectorSlider.value = Number(displayText) + 1;
             }
         }
 
@@ -89,8 +82,12 @@ Item{
 
             Switch {
                 x: column2x;
-                checked: false;
-                onCheckedChanged: if (socket) socket.sendProjectorEnable((checked ? "on" : "off"))
+                checked: true;
+                onCheckedChanged: {
+                    if (socket)
+                        socket.sendProjectorEnable(projectorSlider.value +","+
+                                                   (checked ? "on" : "off"))
+                }
             }
         }
 
@@ -107,8 +104,13 @@ Item{
             Slider {
                 id: polarAzimuthSlider;
                 x: column2x; y: 2; width: settings.width-x-settings.sliderInputTextPad
-                value: 1;
-                onValueChanged: if (socket) socket.sendProjectorPolar(polarAzimuthSlider.value*100 + "," + polarElevationSlider.value*100);
+                value: 0;
+                onValueChanged: {
+                    if (socket)
+                        socket.sendProjectorPolar(projectorSlider.value +","+
+                                                  ((Number(polarAzimuthSlider.value) * 360)) +","+
+                                                  ((Number(polarElevationSlider.value) * 90)) );
+                }
             }
 
             TextInput {
@@ -116,10 +118,11 @@ Item{
                 x: polarAzimuthSlider.width + settings.sliderInputTextPad;
                 y: 2; width: 25;
                 color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular;
-                text: Math.round(polarAzimuthSlider.value * 100);
-                onAccepted: polarAzimuthSlider.value = (Number(displayText) * 100);
+                text: Math.round(polarAzimuthSlider.value * 360);
+                onAccepted: polarAzimuthSlider.value = (Number(displayText)) / 360;
             }
         }
+
 
 
 
@@ -134,35 +137,117 @@ Item{
             Slider {
                 id: polarElevationSlider;
                 x: column2x; y: 2; width: settings.width-x-settings.sliderInputTextPad;
-                value: 1;
-                onValueChanged: if (socket) socket.sendProjectorPolar(polarAzimuthSlider.value*100 + "," + polarElevationSlider.value*100);
+                value: 0;
+                onValueChanged: {
+                    if (socket)
+                        socket.sendProjectorPolar(projectorSlider.value +","+
+                                                  ((Number(polarAzimuthSlider.value) * 360)) +","+
+                                                  ((Number(polarElevationSlider.value) * 90)) );
+                }
             }
 
             TextInput {
                 id: polarElevationInput;
                 x: polarElevationSlider.width + settings.sliderInputTextPad; y: 2; width: 25;
                 color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular;
-                text: Math.round(polarElevationSlider.value * 100);
-                onAccepted: polarElevationSlider.value = (Number(displayText) * 100);
+                text: Math.round(polarElevationSlider.value * 90);
+                onAccepted: polarElevationSlider.value = (Number(displayText)) / 90;
             }
         }
+
+
+    } // column 2
+
+
+
+
+
+
+    Column{
+        x:0; y: 310; width: parent.width;
+        spacing: columnSpacing;
 
 
 
 
         Text {
-            width: 225;
-            color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular;
-            text: qsTr("Calibrate")
+            y: 100; width: 225;
+            color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold; font.bold: true;
+            text: qsTr("Calibration")
+         }
 
-            Switch {
-                x: column2x;
-                checked: false;
-                onCheckedChanged: if (socket) socket.sendProjectorEnable((checked ? "on" : "off"))
+
+
+        Item{
+            width: 300; height: 300
+            Grid {
+                x: 0;
+                columns:2;
+                rows: 10;
+                columnSpacing: 25;
+                rowSpacing: 8;
+
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold; font.bold: true; text: qsTr("m") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular; text: qsTr("Menu") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold; font.bold: true; text: qsTr("down/up") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular; text: qsTr("Navigate") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold; font.bold: true; text: qsTr("back/del") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular; text: qsTr("Back") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold; font.bold: true; text: qsTr("left/right") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular; text: qsTr("Value") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold; font.bold: true; text: qsTr("alt") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular; text: qsTr("Scale Value") }
+            }
+
+            Grid {
+                x: 275;
+                columns:2;
+                rows: 10;
+                columnSpacing: 25;
+                rowSpacing: 8;
+
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold; font.bold: true; text: qsTr("1 - 9") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular; text: qsTr("Projector") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold; font.bold: true; text: qsTr("`") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular; text: qsTr("All") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold; font.bold: true; text: qsTr("cmd + s") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular; text: qsTr("Save") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold; font.bold: true; text: qsTr("r") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular; text: qsTr("Reset") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontBold; font.bold: true; text: qsTr("z/y") }
+                Text { color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular; text: qsTr("Undo/Redo") }
+
             }
         }
 
-    } // column 2
+    }
+    // column 3
+
+
+
+
+
+    Column{
+        x:0; y: 525; width: parent.width;
+        spacing: columnSpacing;
+
+
+        Button {
+             text: qsTr("Calibrate")
+             x: 0; y: 0;  width: 70;
+
+             onClicked: {
+                socket.sendAppFocus(projectorSlider.value);
+            }
+
+            Text { x: 100; y: 3; color: '#fff'; font.pixelSize: 14; font.family: fontRegular; text: qsTr("mouse to projector #" + (projectorSlider.value+1) ) }
+
+        }
+
+
+    } // column 4
+
+
 
 
 

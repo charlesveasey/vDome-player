@@ -12,9 +12,16 @@ Item {
 
 
 
+    Text {
+        width: 225;
+        color: '#fff'; font.pixelSize: fontSizeHeader; font.family: fontBold; font.bold: true;
+        text: qsTr("Window")
+    }
+
+
     Button {
          text: qsTr("Add")
-         x: 0; y: settings.height-115; width: 65;
+         x: 0; y: 45; width: 65;
 
          onClicked: {
                  amodel.append({
@@ -52,7 +59,7 @@ Item {
 
             Text {
                 width: 225;
-                color: '#fff'; font.pixelSize: fontSizeHeader; font.family: fontBold
+                color: '#fff'; font.pixelSize: fontSizeHeader; font.family: fontBold; font.bold: true;
                 text: qsTr("Window " + index)
             }
 
@@ -183,7 +190,7 @@ Item {
 
      ListView {
          id: settingsWindowList;
-         y:0; width: 400; height: settings.height
+         y:100; width: 400; height: settings.height
          model: amodel
          delegate: aDelegate
      }
