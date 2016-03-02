@@ -45,7 +45,7 @@ Item {
         id:playlistTitle
         x: 25; y: 150;
         color: "#ffffff";
-        text: qsTr("")
+        text: qsTr("My Playlist")
         font.pixelSize: 17
         font.family: openSansSemiBold.name;
         font.bold: true;
@@ -530,7 +530,10 @@ Item {
      RETURNS TITLE FORMATTED FOR CONTROL PANEL
      **************************************************************/
     function getControlPanelTitle() {
-        return controlPanel.title = title + ": " + getCurrentTitle();
+
+        if (title.length)
+            return controlPanel.title = title + ": " + getCurrentTitle();
+        return controlPanel.title = getCurrentTitle();
     }
 
     /**************************************************************
