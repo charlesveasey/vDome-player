@@ -1,8 +1,11 @@
 #include "xmlParser.h"
+#include <QDir>
 
 XMLParser::XMLParser(QQuickItem *parent) : QQuickItem(parent){
-    filename = "/Users/Charles/Code/openFrameworks/apps/myApps/vDome/bin/data/settings.xml";
-    defaultFilename = "/Users/Charles/Code/openFrameworks/apps/myApps/vDome/bin/data/default/settings.xml";
+
+    QString path = QCoreApplication::applicationDirPath();
+    filename = QDir::toNativeSeparators(path + "/renderer/data/settings.xml");
+    defaultFilename = QDir::toNativeSeparators(path + "/renderer/data/default.xml");
 }
 
 QVariant XMLParser::load(){
@@ -58,17 +61,10 @@ QVariant XMLParser::load(){
          list << "resolution" << attr;
     }
 
-
-
-///////////////
-     qDebug() <<  list;
-
     return QVariant::fromValue(list);
 }
 
 void XMLParser::save(QVariant data){
-
-
     // load default file
     QStringList list;
     QDomDocument doc;
@@ -77,24 +73,14 @@ void XMLParser::save(QVariant data){
     if (!file.open(QIODevice::ReadOnly) || !doc.setContent(&file))
         return;
 
-
-
     QDomNode element;
     QString attr;
-
     QDomNode pClone;
     QDomNode wClone;
-
-
-
     QDomNodeList p = doc.elementsByTagName("projector");
     pClone = p.at(0).cloneNode();
-
     QDomNodeList w = doc.elementsByTagName("window");
     wClone = w.at(0).cloneNode(false);
-
-
-
     QDomNode v = doc.firstChild();
 
     v.removeChild(w.at(0));
@@ -105,20 +91,19 @@ void XMLParser::save(QVariant data){
         if (dataList[i] == "window"){
             QDomElement clone = wClone.cloneNode(false).toElement();
 
-            clone.setAttribute("border", dataList[i+3]);
+            QString b = (dataList[i+3] == "true") ? "on" : "off";
+            clone.setAttribute("border", b);
             clone.setAttribute("position", dataList[i+5]);
 
             int pCount = dataList[i+7].toInt();
 
-            qDebug() << dataList[i+9];
-
             int resx = dataList[i+9].toInt();
-            int resy = dataList[i+10].toInt();
+            int resy = dataList[i+11].toInt();
             clone.setAttribute("resolution", ( QString::number(resx*pCount) + "," + QString::number(resy) ) );
 
             for (int j=0; j<pCount; j++){
                 QDomElement clone2 = pClone.cloneNode().toElement();
-                QString res = ( dataList[i+9] + "," + dataList[i+10] );
+                QString res = dataList[i+9] + "," + dataList[i+11];
                 clone2.setAttribute("resolution", res);
                 clone.appendChild(clone2);
             }
@@ -128,7 +113,6 @@ void XMLParser::save(QVariant data){
 
     }
 
-
     QFile fileOut( filename );
     if( !fileOut.open( QIODevice::WriteOnly | QIODevice::Text ) )
     {
@@ -137,8 +121,6 @@ void XMLParser::save(QVariant data){
     QTextStream stream( &fileOut );
     stream << doc.toString();
     fileOut.close();
-
-
 }
 
 

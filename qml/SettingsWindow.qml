@@ -28,7 +28,7 @@ Item {
          x: 0; y: 45; width: 65;
 
          onClicked: {
-                 /*model.append({
+                 model.append({
                     "index":         list.count+1,
                     "border":        false,
                     "positionX":     0,
@@ -37,10 +37,7 @@ Item {
                     "resolutionX":   1024,
                     "resolutionY":   768
 
-                 })*/
-
-             syscmds.startRenderer();
-
+                 })
         }
 
          Button {
@@ -48,11 +45,9 @@ Item {
               x: parent.width+10; y: 0;  width: 65;
 
               onClicked: {
-                  //if (list.count > 1){
-                     //model.remove( list.count-1, 1 );
-                      syscmds.closeRenderer();
-
-                 // }
+                if (list.count > 1){
+                    model.remove( list.count-1, 1 );
+                }
              }
          }
          Button {
@@ -79,16 +74,10 @@ Item {
                     ndata[ni] = list.model.get(i).resolutionY; ni++
                 };
 
-                syscmds.restartRenderer();
-
-
-                //console.log(ndata);
-                //xml.save(ndata);
-
-                //socket.sendExit();
+                    console.log(ndata);
+                    xml.save(ndata);
+                    syscmds.restartRenderer();
              }
-
-
 
          }
     }

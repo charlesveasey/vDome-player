@@ -100,10 +100,6 @@ ApplicationWindow {
             });
         }
 
-        Component.onCompleted: {
-            //syscmds.startRenderer();
-        }
-
     }
 
 
@@ -157,6 +153,10 @@ ApplicationWindow {
      **************************************************************/
     Syscmds {
         id: syscmds
+
+        Component.onCompleted: {
+            syscmds.startRenderer();
+        }
     }
 
     /**************************************************************
