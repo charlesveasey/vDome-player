@@ -367,7 +367,7 @@ Item {
             arr[index] =  parseFloat(playlist.model.get(i).duration);
             arr[index+1] = playlist.model.get(i).author;
             arr[index+2] = playlist.model.get(i).title;
-            arr[index+3] = plist.convertPath(playlist.model.get(i).file);
+            arr[index+3] = playlist.model.get(i).file;
             index = index+4;
         }
         plist.save(filepath +".m3u", arr);
