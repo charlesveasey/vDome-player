@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:///qml/main.qml")));
 
-    Syscmds syscmds;
-    syscmds.executeFile();
+    //Syscmds syscmds;
+    //syscmds.startRenderer();
     return app.exec();
 }

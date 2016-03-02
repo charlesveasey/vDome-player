@@ -82,6 +82,9 @@ Item {
        oscSend.send(address, msg);
     }
 
+    function sendExit(){
+        send("/exit/");
+    }
 
     // input
     function sendSource(value){

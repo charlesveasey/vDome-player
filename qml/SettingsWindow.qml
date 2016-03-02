@@ -28,16 +28,19 @@ Item {
          x: 0; y: 45; width: 65;
 
          onClicked: {
-                 model.append({
+                 /*model.append({
                     "index":         list.count+1,
                     "border":        false,
                     "positionX":     0,
                     "positionY":     0,
-                    "count":         1,
+                    "pCount":         1,
                     "resolutionX":   1024,
                     "resolutionY":   768
 
-                 })
+                 })*/
+
+             syscmds.startRenderer();
+
         }
 
          Button {
@@ -45,12 +48,49 @@ Item {
               x: parent.width+10; y: 0;  width: 65;
 
               onClicked: {
-                  if (list.count > 1){
-                     model.remove( list.count-1, 1 );
-                  }
+                  //if (list.count > 1){
+                     //model.remove( list.count-1, 1 );
+                      syscmds.closeRenderer();
+
+                 // }
              }
          }
+         Button {
+              text: qsTr("Apply")
+              x: parent.width*2 + 20; y: 0;  width: 65;
 
+              onClicked: {
+                var len = 0;
+                var ndata = [];
+                var ni = 0;
+
+                for (var i=0; i<list.count; i++){
+                    ndata[ni] = "window"; ni++
+                    ndata[ni] = list.model.get(i).index; ni++
+                    ndata[ni] = "border"; ni++
+                    ndata[ni] = list.model.get(i).border; ni++
+                    ndata[ni] = "position"; ni++
+                    ndata[ni] = list.model.get(i).positionX + "," + list.model.get(i).positionY; ni++
+                    ndata[ni] = "pCount"; ni++
+                    ndata[ni] = list.model.get(i).pCount; ni++
+                    ndata[ni] = "resolutionX"; ni++
+                    ndata[ni] = list.model.get(i).resolutionX; ni++
+                    ndata[ni] = "resolutionY"; ni++
+                    ndata[ni] = list.model.get(i).resolutionY; ni++
+                };
+
+                syscmds.restartRenderer();
+
+
+                //console.log(ndata);
+                //xml.save(ndata);
+
+                //socket.sendExit();
+             }
+
+
+
+         }
     }
 
 
@@ -72,7 +112,7 @@ Item {
             Text {
                 width: 225;
                 color: '#fff'; font.pixelSize: fontSizeHeader; font.family: fontBold; font.bold: true;
-                text: qsTr("Window " + index)
+                text: qsTr("Window " + (index + 1))
             }
 
 
@@ -87,12 +127,7 @@ Item {
                 Switch {
                     x: column2x;
                     checked: border;
-                    onCheckedChanged: {
-                        if (socket) {
-                            //////////////////////////////////////////////////////////////
-                           // socket.sendProjectorMenu((checked ? "on" : "off"));
-                         }
-                    }
+                    onCheckedChanged: list.model.get(index).border = checked;
                 }
             }
 
@@ -115,8 +150,7 @@ Item {
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
                     text: positionX;
-                    //////////////////////////////////
-                   // onAccepted: projectorCount = displayText;
+                    onTextChanged: list.model.get(index).positionX = parseFloat(text);
                 }
 
                 // y
@@ -126,8 +160,7 @@ Item {
                     clip: true; activeFocusOnPress: true; readOnly: false;  selectByMouse: true;
                     enabled: true; visible: true;
                     text: positionY;
-                    //////////////////////////////////
-                   // onAccepted: projectorCount = displayText;
+                    onTextChanged: list.model.get(index).positionY = parseFloat(text);
                 }
             }
 
@@ -138,7 +171,7 @@ Item {
             Text {
                 width: 225;
                 color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
-                text: qsTr("Projector Count ")
+                text: qsTr("Projector Count")
 
 
                 // input projector count
@@ -147,11 +180,8 @@ Item {
                     color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                     clip: true;  activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
-                    text: count;
-                    onAccepted: {
-                        //////////////////////////////////
-                       // onAccepted: projectorCount = displayText;
-                    }
+                    text: pCount;
+                    onTextChanged: list.model.get(index).pCount = parseInt(text);
                 }
 
 
@@ -174,8 +204,7 @@ Item {
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true;  visible: true;
                     text: resolutionX;
-                    //////////////////////////////////
-                   // onAccepted: projectorCount = displayText;
+                    onTextChanged: list.model.get(index).resolutionX = parseFloat(text);
                }
 
                 // height
@@ -185,8 +214,7 @@ Item {
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
                     text: resolutionY;
-                    //////////////////////////////////
-                   // onAccepted: projectorCount = displayText;
+                    onTextChanged: list.model.get(index).resolutionY = parseFloat(text);
                 }
 
             }

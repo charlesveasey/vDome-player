@@ -19,15 +19,17 @@ class XMLParser : public QQuickItem
 public:
     XMLParser(QQuickItem *parent = 0);
     Q_INVOKABLE QVariant load();
-    Q_INVOKABLE void save(QString filename, QVariant data);
+    Q_INVOKABLE void save(QVariant data);
     QList<XMLDataObject> list;
 
 private:
     QString readNextText();
     QString errorString();
 
-    QString _filename;
     QDomDocument xml;
+    QString filename;
+    QString defaultFilename;
+
 };
 
 #endif // XMLPARSER_H

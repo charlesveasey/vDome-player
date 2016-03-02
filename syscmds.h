@@ -10,13 +10,21 @@ class Syscmds : public QQuickItem
 public:
     Syscmds(QQuickItem *parent = 0);
     Q_INVOKABLE void deleteFile(QString filename);
-    Q_INVOKABLE void executeFile();
+    Q_INVOKABLE void startRenderer();
+    Q_INVOKABLE void closeRenderer();
+    Q_INVOKABLE void restartRenderer();
     Q_INVOKABLE QString getOSName();
 
 private:
     void processError(QProcess::ProcessError err);
 
-    QProcess process;
+    QProcess Process;
+
+
+public slots:
+    void processExited();
+    void onStarted();
+
 };
 
 #endif // SYSCMDS_H
