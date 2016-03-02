@@ -137,7 +137,7 @@ MenuBar {
      SETTINGS MENU
      **************************************************************/
     Menu {
-        title: "Settings"
+        title: "Setup"
         MenuItem {
             text: "Input"
             onTriggered: settings.open("input");

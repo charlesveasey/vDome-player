@@ -8,7 +8,7 @@ import QtQuick.Controls.Styles 1.2
  **************************************************************/
 Window {
     id: root
-    title: "Settings"
+    title: ""
     width: window.width/2; height: window.height
     minimumWidth: 400; minimumHeight: 265;
     color: '#111'; opacity: 1
