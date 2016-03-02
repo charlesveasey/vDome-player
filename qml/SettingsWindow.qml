@@ -29,7 +29,7 @@ Item {
 
          onClicked: {
                  model.append({
-                    "index":         list.count+1,
+                    "index":         list.count,
                     "border":        false,
                     "positionX":     0,
                     "positionY":     0,
