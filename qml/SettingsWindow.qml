@@ -163,8 +163,12 @@ Item {
                     color: '#fff';  font.pixelSize: fontSizeNormal; font.family: fontRegular; horizontalAlignment:  Text.AlignLeft;
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
-                    text: positionX;
-                    onTextChanged: list.model.get(index).positionX = parseFloat(text);
+                    onTextChanged: {
+                        list.model.get(index).positionX = parseFloat(text);
+                    }
+                    Component.onCompleted: {
+                        text = list.model.get(index).positionX;
+                    }
                 }
 
                 // y
@@ -173,8 +177,13 @@ Item {
                     color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                     clip: true; activeFocusOnPress: true; readOnly: false;  selectByMouse: true;
                     enabled: true; visible: true;
-                    text: positionY;
-                    onTextChanged: list.model.get(index).positionY = parseFloat(text);
+                    text: "";
+                    onTextChanged: {
+                        list.model.get(index).positionY = parseFloat(text);
+                    }
+                    Component.onCompleted: {
+                        text = list.model.get(index).positionY;
+                    }
                 }
             }
 
@@ -220,10 +229,14 @@ Item {
                     color: '#fff';  font.pixelSize: fontSizeNormal; font.family: fontRegular; horizontalAlignment:  Text.AlignLeft;
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true;  visible: true;
-                    text: resolutionX;
+                    text: "";
                     onTextChanged: {
+                        list.model.get(index).resolutionX = parseFloat(text);
                         if (f2) fullReset = true;
                         f2 = true;
+                    }
+                    Component.onCompleted: {
+                        text = list.model.get(index).resolutionX;
                     }
                }
 
@@ -233,11 +246,14 @@ Item {
                     color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
-                    text: resolutionY;
+                    text: "";
                     onTextChanged: {
                         list.model.get(index).resolutionY = parseFloat(text);
                         if (f3) fullReset = true;
                         f3 = true;
+                    }
+                    Component.onCompleted: {
+                        text = list.model.get(index).resolutionY;
                     }
                 }
 
