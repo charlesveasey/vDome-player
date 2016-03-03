@@ -12,11 +12,11 @@ Item {
     property int column2x: 300;
     property int column3x: column2x+50;
     property var model: model;
-    property var projectorCount: 0;
     property bool fullReset: false;
     property bool f1: false;
     property bool f2: false;
     property bool f3: false;
+    property var projectorCount: 1;
 
     // tab header
     Text {
@@ -96,7 +96,7 @@ Item {
             ndata[ni] = "position"; ni++
             ndata[ni] = list.model.get(i).positionX + "," + list.model.get(i).positionY; ni++
             ndata[ni] = "pCount"; ni++
-            ndata[ni] = list.model.get(i).pCount; ni++
+            ndata[ni] = projectorCount; ni++
             ndata[ni] = "resolutionX"; ni++
             ndata[ni] = list.model.get(i).resolutionX; ni++
             ndata[ni] = "resolutionY"; ni++
@@ -105,9 +105,13 @@ Item {
             ndata[ni] = fullReset; ni++
         };
 
+
+
         xml.save(ndata);
         syscmds.restartRenderer();
         fullReset = false;
+
+        settings.projectorSettings.pSlider.maximumValue = parseInt(projectorCount) - 1;
     }
 
 
@@ -192,6 +196,7 @@ Item {
 
             // projector count
             Text {
+                id: pCountText
                 width: 225;
                 color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                 text: qsTr("Projector Count")
@@ -199,6 +204,7 @@ Item {
 
                 // input projector count
                 TextInput{
+                    id: pCountInput;
                     x: column2x;  width: 50;
                     color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                     clip: true;  activeFocusOnPress: true; readOnly: false; selectByMouse: true;
@@ -207,6 +213,7 @@ Item {
                     onTextChanged: {
                         if (f1) fullReset = true;
                         f1 = true;
+                        projectorCount = parseInt(text);
                     }
                 }
 
@@ -229,7 +236,6 @@ Item {
                     color: '#fff';  font.pixelSize: fontSizeNormal; font.family: fontRegular; horizontalAlignment:  Text.AlignLeft;
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true;  visible: true;
-                    text: "";
                     onTextChanged: {
                         list.model.get(index).resolutionX = parseFloat(text);
                         if (f2) fullReset = true;
@@ -246,7 +252,6 @@ Item {
                     color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
-                    text: "";
                     onTextChanged: {
                         list.model.get(index).resolutionY = parseFloat(text);
                         if (f3) fullReset = true;

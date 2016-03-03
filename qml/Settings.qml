@@ -25,6 +25,7 @@ Window {
     property string fontBold: openSansExtraBold.name;
 
     property var windowSettings: settingsWindow;
+    property var projectorSettings: settingsProjector;
 
     Component.onCompleted: {
         db.createSettings();

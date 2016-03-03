@@ -102,6 +102,8 @@ ApplicationWindow {
                  "resolutionX":     resolutionX,
                  "resolutionY":     resolutionY
             });
+
+           settings.projectorSettings.pSlider.maximumValue = pCount - 1;
         }
 
     }

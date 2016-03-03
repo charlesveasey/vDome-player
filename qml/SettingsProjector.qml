@@ -9,7 +9,7 @@ import QtQuick.Dialogs 1.1
 Item{
     anchors.fill: parent.fill;
     property int column2x: 90
-
+    property var pSlider: projectorSlider;
 
     Column{
         x:0; y: 0; width: parent.width;
@@ -63,6 +63,7 @@ Item{
             id: projectorSlider;
             x: 0; y: 0; width: settings.width-x-settings.sliderInputTextPad
             value: 0; maximumValue: 5.0; stepSize: 1;
+
             TextInput {
                 id: projectorInput;
                 x: parent.width+25; y: -2; width: 25;
