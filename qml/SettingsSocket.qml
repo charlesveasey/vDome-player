@@ -9,6 +9,9 @@ Item{
     anchors.fill: parent.fill;
     property int columnOffset: 10;
     property int column2x: 250;
+    property var hText: hostText;
+    property var sText: sendPortText;
+    property var rText: receivePortText;
 
     Column{
         y: 0; width: 400; height: 100;
@@ -31,27 +34,8 @@ Item{
                 x: column2x; width:225;
                 color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                 clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
-                enabled: false; visible: enabled;
-                text: socket.host;
-                onAccepted: {
-                    enabled = false;
-                    socket.host = displayText;
-                }
-            }
-
-            Text {
-                id:hostTextT;
-                x: hostText.x; y: hostText.y;  width: hostText.width;
-                color: hostText.color;  font.pixelSize: hostText.font.pixelSize; font.family: hostText.font.family;
-                visible: !hostText.enabled;
-                text: hostText.text;
-
-                MouseArea{
-                    width: parent.width; height: parent.height;
-                    onPressed: {
-                        hostText.enabled = true;
-                        hostText.forceActiveFocus();
-                    }
+                onTextChanged: {
+                    socket.host = text;
                 }
             }
         }
@@ -69,72 +53,28 @@ Item{
                 x: column2x; width:225;
                 color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular
                 clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
-                enabled: false; visible: enabled;
-                text: socket.sendPort;
-                onAccepted: {
-                    enabled = false;
-                    socket.sendPort = displayText;
+                onTextChanged: {
+                    socket.sendPort = text;
                 }
             }
-            Text {
-                id:sendPortTextT;
-                x: sendPortText.x; y: sendPortText.y; width: sendPortText.width;
-                color: sendPortText.color; font.pixelSize: sendPortText.font.pixelSize; font.family: sendPortText.font.family;
-                visible: !sendPortText.enabled;
-                text: sendPortText.text;
 
-                MouseArea{
-                    width: parent.width;
-                    height: parent.height;
-                    onPressed: {
-                        sendPortText.enabled = true;
-                        sendPortText.forceActiveFocus();
-                    }
-                }
-
-            }
         }
 
 
         Text {
             width: 225;
             color: '#fff'; font.pixelSize: fontSizeNormal; font.family: fontRegular;
-            text: qsTr("Receive port:")
-
+            text: qsTr("Receive Port")
             TextInput{
                 id:receivePortText
                 x: column2x; width:225
                 color: '#fff'; font.pixelSize: fontSizeNormal;  font.family: fontRegular
                 clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
-                enabled: false; visible: enabled;
-                text: socket.receivePort;
-                onAccepted: {
-                    enabled = false;
-                    socket.receivePort = displayText;
+                onTextChanged: {
+                    socket.receivePort = text;
                 }
             }
-
-            Text {
-                id:receivePortTextT;
-                x: receivePortText.x; y: receivePortText.y; width: receivePortText.width;
-                color: receivePortText.color; font.pixelSize: receivePortText.font.pixelSize; font.family: receivePortText.font.family;
-                visible: !receivePortText.enabled;
-                text: receivePortText.text;
-
-                MouseArea{
-                    width: parent.width;
-                    height: parent.height;
-                    onPressed: {
-                        receivePortText.enabled = true;
-                        receivePortText.forceActiveFocus();
-                    }
-                }
-
-            }
-
         }
-
-
 
 
     }

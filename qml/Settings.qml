@@ -31,9 +31,19 @@ Window {
         load();
     }
 
-
     Component.onDestruction: {
-        cancel();
+
+        // save settings objects
+        settingsObject.librarySlide = settingsLibrary.imageDuration;
+        settingsObject.socketHost = socket.host;
+        settingsObject.socketSend = socket.sendPort;
+        settingsObject.socketReceive = socket.receivePort;
+        db.updateSettings(settingsObject);
+        libraryPanel.slide = settingsObject.librarySlide;
+        libraryPanel.updateDuration();
+        libraryPanel.loadSort();
+
+        settingsLibrary.clearLibrary();
     }
 
 
@@ -162,59 +172,6 @@ Window {
         }
     }
 
-    /**************************************************************
-     SAVE / CANCEL BUTTONS
-     **************************************************************/
-    Row{
-        spacing: 10;
-        anchors.bottom: parent.bottom;
-        anchors.right: parent.right;
-        anchors.bottomMargin: 15;
-        anchors.rightMargin: 20;
-
-        Button {
-            width:60;
-             text: qsTr("Cancel")
-             onClicked: cancel();
-         }
-        Button {
-            width:60;
-             text: qsTr("Save")
-             onClicked: save();
-         }
-    }
-
-    /**************************************************************
-     SAVE ACTION
-     **************************************************************/
-    function save(){
-        visible = false;
-
-        settingsObject.librarySlide = settingsLibrary.imageDuration;
-        settingsObject.socketHost = socket.host;
-        settingsObject.socketSend = socket.sendPort;
-        settingsObject.socketReceive = socket.receivePort;
-
-        db.updateSettings(settingsObject);
-        libraryPanel.slide = settingsObject.librarySlide;
-        libraryPanel.updateDuration();
-        libraryPanel.loadSort();
-
-        if (settingsLibrary.clearPending){
-            settingsLibrary.clearLibrary();
-        }
-    }
-
-    /**************************************************************
-     CANCEL ACTION
-     **************************************************************/
-    function cancel(){
-        load();
-        libraryPanel.loadSort();
-        playlistIndexPanel.loadSort();
-        visible = false;
-    }
-
 
     /**************************************************************
      LOAD SETTINGS FROM DB
@@ -231,9 +188,15 @@ Window {
             libraryPanel.updateDuration();
             settingsLibrary.imageDuration = o.librarySlide;
 
+            settingsLibrary.dtext.text = o.librarySlide;
+
             socket.host = o.socketHost;
             socket.sendPort = parseInt(o.socketSend);
             socket.receivePort = parseInt(o.socketReceive);
+
+            settingsSocket.hText.text = socket.host;
+            settingsSocket.sText.text = socket.sendPort;
+            settingsSocket.rText.text = socket.receivePort;
 
             for (var p in  o){
                 settingsObject[p] = o[p]
@@ -282,5 +245,6 @@ Window {
         }
         visible = true;
     }
+
 
 }////////////////////////////////////////////
