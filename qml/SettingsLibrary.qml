@@ -80,9 +80,9 @@ Item {
         MessageDialog {
             id: clearWarningDialog
             title: "Clear Library"
-            text: "Are you sure you want to clear your library of media and playlists?"
-            standardButtons: StandardButton.Yes | StandardButton.No
-            onYes: {
+            text: "Are you sure you want to clear your playlist and media library?"
+            standardButtons: StandardButton.Ok | StandardButton.Cancel
+            onAccepted: {
                 clearPending = true;
                 libraryPanel.clear();
                 playlistIndexPanel.clear();

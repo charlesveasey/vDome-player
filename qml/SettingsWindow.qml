@@ -13,6 +13,10 @@ Item {
     property int column3x: column2x+50;
     property var model: model;
     property var projectorCount: 0;
+    property bool fullReset: false;
+    property bool f1: false;
+    property bool f2: false;
+    property bool f3: false;
 
     // tab header
     Text {
@@ -55,35 +59,56 @@ Item {
               x: parent.width*2 + 20; y: 0;  width: 65;
 
               onClicked: {
-                var len = 0;
-                var ndata = [];
-                var ni = 0;
-
-                for (var i=0; i<list.count; i++){
-                    ndata[ni] = "window"; ni++
-                    ndata[ni] = list.model.get(i).index; ni++
-                    ndata[ni] = "border"; ni++
-                    ndata[ni] = list.model.get(i).border; ni++
-                    ndata[ni] = "position"; ni++
-                    ndata[ni] = list.model.get(i).positionX + "," + list.model.get(i).positionY; ni++
-                    ndata[ni] = "pCount"; ni++
-                    ndata[ni] = list.model.get(i).pCount; ni++
-                    ndata[ni] = "resolutionX"; ni++
-                    ndata[ni] = list.model.get(i).resolutionX; ni++
-                    ndata[ni] = "resolutionY"; ni++
-                    ndata[ni] = list.model.get(i).resolutionY; ni++
-                };
-
-                    console.log(ndata);
-                    xml.save(ndata);
-                    syscmds.restartRenderer();
+                  if (fullReset){
+                      clearCalibrationWarning.open();
+                  }
+                  else {
+                      saveWindowData();
+                  }
              }
 
          }
     }
 
 
+    MessageDialog {
+        id: clearCalibrationWarning
+        title: "Clear Calibration"
+        text: "Modifying the projectors will reset all calibration data."
+        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        onAccepted: {
+            saveWindowData();
+        }
+        Component.onCompleted: visible = false;
+    }
 
+
+    function saveWindowData(){
+        var len = 0;
+        var ndata = [];
+        var ni = 0;
+
+        for (var i=0; i<list.count; i++){
+            ndata[ni] = "window"; ni++
+            ndata[ni] = list.model.get(i).index; ni++
+            ndata[ni] = "border"; ni++
+            ndata[ni] = list.model.get(i).border; ni++
+            ndata[ni] = "position"; ni++
+            ndata[ni] = list.model.get(i).positionX + "," + list.model.get(i).positionY; ni++
+            ndata[ni] = "pCount"; ni++
+            ndata[ni] = list.model.get(i).pCount; ni++
+            ndata[ni] = "resolutionX"; ni++
+            ndata[ni] = list.model.get(i).resolutionX; ni++
+            ndata[ni] = "resolutionY"; ni++
+            ndata[ni] = list.model.get(i).resolutionY; ni++
+            ndata[ni] = "fullReset"; ni++
+            ndata[ni] = fullReset; ni++
+        };
+
+        xml.save(ndata);
+        syscmds.restartRenderer();
+        fullReset = false;
+    }
 
 
 
@@ -170,7 +195,10 @@ Item {
                     clip: true;  activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
                     text: pCount;
-                    onTextChanged: list.model.get(index).pCount = parseInt(text);
+                    onTextChanged: {
+                        if (f1) fullReset = true;
+                        f1 = true;
+                    }
                 }
 
 
@@ -193,7 +221,10 @@ Item {
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true;  visible: true;
                     text: resolutionX;
-                    onTextChanged: list.model.get(index).resolutionX = parseFloat(text);
+                    onTextChanged: {
+                        if (f2) fullReset = true;
+                        f2 = true;
+                    }
                }
 
                 // height
@@ -203,7 +234,11 @@ Item {
                     clip: true; activeFocusOnPress: true; readOnly: false; selectByMouse: true;
                     enabled: true; visible: true;
                     text: resolutionY;
-                    onTextChanged: list.model.get(index).resolutionY = parseFloat(text);
+                    onTextChanged: {
+                        list.model.get(index).resolutionY = parseFloat(text);
+                        if (f3) fullReset = true;
+                        f3 = true;
+                    }
                 }
 
             }
@@ -233,7 +268,7 @@ Item {
          delegate: delgate
 
           Component.onCompleted: {
-              xml.loadSettings();
+                xml.loadSettings();
           }
      }
 

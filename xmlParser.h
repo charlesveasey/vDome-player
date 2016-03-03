@@ -29,6 +29,9 @@ private:
     QDomDocument xml;
     QString filename;
     QString defaultFilename;
+    QString warpFolder;
+    QString colorFolder;
+    bool fullReset;
 
 };
 

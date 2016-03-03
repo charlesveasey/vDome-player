@@ -1,11 +1,14 @@
 #include "xmlParser.h"
 #include <QDir>
+#include "syscmds.h"
 
 XMLParser::XMLParser(QQuickItem *parent) : QQuickItem(parent){
-
     QString path = QCoreApplication::applicationDirPath();
     filename = QDir::toNativeSeparators(path + "/renderer/data/settings.xml");
     defaultFilename = QDir::toNativeSeparators(path + "/renderer/data/default.xml");
+    warpFolder = QDir::toNativeSeparators(path + "/renderer/data/settings/warp/");
+    colorFolder = QDir::toNativeSeparators(path + "/renderer/data/settings/color/");
+    fullReset = false;
 }
 
 QVariant XMLParser::load(){
@@ -65,6 +68,7 @@ QVariant XMLParser::load(){
 }
 
 void XMLParser::save(QVariant data){
+    fullReset = false;
     // load default file
     QStringList list;
     QDomDocument doc;
@@ -108,19 +112,25 @@ void XMLParser::save(QVariant data){
                 clone.appendChild(clone2);
             }
 
+            fullReset = (dataList[i+13] == "true") ? true : false;
             v.appendChild(clone);
         }
-
     }
 
     QFile fileOut( filename );
-    if( !fileOut.open( QIODevice::WriteOnly | QIODevice::Text ) )
-    {
+    if ( !fileOut.open( QIODevice::WriteOnly | QIODevice::Text ) ) {
        qDebug( "Failed to open file for writing." );
     }
+
     QTextStream stream( &fileOut );
     stream << doc.toString();
     fileOut.close();
+
+    if (fullReset){
+        // remove settings directories for full reset
+        Syscmds::removeDir(warpFolder);
+        Syscmds::removeDir(colorFolder);
+    }
 }
 
 

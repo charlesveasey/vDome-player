@@ -14,6 +14,7 @@ public:
     Q_INVOKABLE void closeRenderer();
     Q_INVOKABLE void restartRenderer();
     Q_INVOKABLE QString getOSName();
+    static bool removeDir(const QString &dirName);
 
 private:
     void processError(QProcess::ProcessError err);
